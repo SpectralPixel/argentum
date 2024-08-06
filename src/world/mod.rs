@@ -1,2 +1,2 @@
-mod cube;
 mod chunk;
+mod cube;
