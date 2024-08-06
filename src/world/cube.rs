@@ -1,5 +1,5 @@
 #[derive(PartialEq, Debug)]
-struct Cube {
+pub struct Cube {
     index: u8,
 }
 
