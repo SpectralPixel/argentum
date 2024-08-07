@@ -1,11 +1,11 @@
 #[derive(PartialEq, Debug, Default, Clone)]
-pub struct Cube {
+pub struct Voxel {
     index: u8,
 }
 
-impl Cube {
+impl Voxel {
     pub fn new(index: u8) -> Self {
-        Cube { index }
+        Voxel { index }
     }
 }
 
@@ -17,8 +17,8 @@ mod tests {
 
     quickcheck! {
         fn new_cube(index: u8) -> bool {
-            let result = Cube::new(index);
-            let expected = Cube { index };
+            let result = Voxel::new(index);
+            let expected = Voxel { index };
             result == expected
         }
     }

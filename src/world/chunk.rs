@@ -1,17 +1,17 @@
 use bevy::math::I64Vec3;
 use ndarray::{Array3, Ix3};
 
-use super::{cube::Cube, World};
+use super::{voxel::Voxel, World};
 
 #[derive(PartialEq, Debug)]
 pub struct Chunk {
-    data: Array3<Cube>,
+    data: Array3<Voxel>,
 }
 
 impl Chunk {
     pub fn new() -> Self {
         let size = World::CHUNK_SIZE as usize;
-        let empty_array: Array3<Cube> = Array3::from_elem(Ix3(size, size, size), Cube::default());
+        let empty_array: Array3<Voxel> = Array3::from_elem(Ix3(size, size, size), Voxel::default());
         Chunk { data: empty_array }
     }
 
@@ -59,7 +59,7 @@ mod tests {
         let size = World::CHUNK_SIZE as usize;
         let result = Chunk::new();
         let expected = Chunk {
-            data: Array3::from_elem(Ix3(size, size, size), Cube::default()),
+            data: Array3::from_elem(Ix3(size, size, size), Voxel::default()),
         };
         assert_eq!(result, expected);
     }

@@ -2,7 +2,7 @@ use bevy::{math::I64Vec3, utils::HashMap};
 use chunk::Chunk;
 
 mod chunk;
-mod cube;
+mod voxel;
 
 #[derive(Default)]
 struct World {
