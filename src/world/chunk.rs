@@ -15,7 +15,15 @@ impl Chunk {
         Chunk { data: empty_array }
     }
 
-    pub fn world_to_chunk_position(world_position: I64Vec3) -> I64Vec3 {
+    pub fn get_voxel(&self, local_position: &I64Vec3) -> Option<&Voxel> {
+        let I64Vec3 { x, y, z } = *local_position;
+        let x = usize::try_from(x).unwrap();
+        let y = usize::try_from(y).unwrap();
+        let z = usize::try_from(z).unwrap();
+        self.data.get(Ix3(x, y, z))
+    }
+
+    pub fn world_to_chunk_position(world_position: &I64Vec3) -> I64Vec3 {
         let chunk_size = super::World::CHUNK_SIZE as i64;
 
         I64Vec3::new(
@@ -25,7 +33,7 @@ impl Chunk {
         )
     }
 
-    pub fn world_position_within_chunk(world_position: I64Vec3) -> I64Vec3 {
+    pub fn world_position_within_chunk(world_position: &I64Vec3) -> I64Vec3 {
         let chunk_size = super::World::CHUNK_SIZE as i64;
 
         I64Vec3::new(
@@ -67,7 +75,7 @@ mod tests {
     quickcheck! {
         fn wrapped_position_within_chunk_bounds(random_x: i64, random_y: i64, random_z: i64) -> bool {
             let position = I64Vec3::new(random_x, random_y, random_z);
-            let wrapped_position = Chunk::world_position_within_chunk(position);
+            let wrapped_position = Chunk::world_position_within_chunk(&position);
 
             let chunk_size = super::super::World::CHUNK_SIZE as i64;
 
