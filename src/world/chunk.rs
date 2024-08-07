@@ -1,6 +1,6 @@
 use ndarray::{Array3, Ix3};
 
-use super::cube::Cube;
+use super::{cube::Cube, World};
 
 #[derive(PartialEq, Debug)]
 pub struct Chunk {
@@ -8,8 +8,8 @@ pub struct Chunk {
 }
 
 impl Chunk {
-    pub fn new(size: u8) -> Self {
-        let size = size as usize;
+    pub fn new() -> Self {
+        let size = World::CHUNK_SIZE as usize;
         let empty_array: Array3<Cube> = Array3::from_elem(Ix3(size, size, size), Cube::default());
         Chunk { data: empty_array }
     }
@@ -17,16 +17,13 @@ impl Chunk {
 
 #[cfg(test)]
 mod tests {
-    use quickcheck::quickcheck;
-
     use super::*;
 
-    quickcheck! {
-        fn new_chunk(size: u8) -> bool {
-            let result = Chunk::new(size);
-            let size = size as usize;
-            let expected = Chunk { data: Array3::from_elem(Ix3(size, size, size), Cube::default()) };
-            result == expected
-        }
+    #[test]
+    fn new_chunk() {
+        let size = World::CHUNK_SIZE as usize;
+        let result = Chunk::new();
+        let expected = Chunk { data: Array3::from_elem(Ix3(size, size, size), Cube::default()) };
+        assert_eq!(result, expected);
     }
 }

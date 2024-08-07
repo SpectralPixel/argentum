@@ -10,6 +10,8 @@ struct World {
 }
 
 impl World {
+    pub const CHUNK_SIZE: u8 = 32;
+
     pub fn new() -> Self {
         World { data: HashMap::default() }
     }
