@@ -9,7 +9,8 @@ struct Chunk {
 }
 
 impl Chunk {
-    pub fn new(size: usize) -> Self {
+    pub fn new(size: u8) -> Self {
+        let size = size as usize;
         let empty_array: Array3<Cube> = Array3::from_elem(Ix3(size, size, size), Cube::default());
         Chunk {
             size,
@@ -25,8 +26,9 @@ mod tests {
     use super::*;
 
     quickcheck! {
-        fn new_chunk(size: usize) -> bool {
+        fn new_chunk(size: u8) -> bool {
             let result = Chunk::new(size);
+            let size = size as usize;
             let expected = Chunk {
                 size,
                 data: Array3::from_elem(Ix3(size, size, size), Cube::default()),
