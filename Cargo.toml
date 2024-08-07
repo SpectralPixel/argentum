@@ -11,3 +11,4 @@ opt-level = 3
 
 [dependencies]
 bevy = "0.14.1"
+quickcheck = "1.0.3"
