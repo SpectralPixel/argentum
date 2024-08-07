@@ -23,7 +23,9 @@ mod tests {
     fn new_chunk() {
         let size = World::CHUNK_SIZE as usize;
         let result = Chunk::new();
-        let expected = Chunk { data: Array3::from_elem(Ix3(size, size, size), Cube::default()) };
+        let expected = Chunk {
+            data: Array3::from_elem(Ix3(size, size, size), Cube::default()),
+        };
         assert_eq!(result, expected);
     }
 }
