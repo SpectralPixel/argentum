@@ -3,7 +3,7 @@ use ndarray::{Array3, Ix3};
 use super::cube::Cube;
 
 #[derive(PartialEq, Debug)]
-struct Chunk {
+pub struct Chunk {
     data: Array3<Cube>,
 }
 
