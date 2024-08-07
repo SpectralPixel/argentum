@@ -11,13 +11,15 @@ impl Cube {
 
 #[cfg(test)]
 mod tests {
+    use quickcheck::quickcheck;
+
     use super::*;
 
-    #[test]
-    fn new_cube() {
-        let index = 2;
-        let result = Cube::new(index);
-        let expected = Cube { index };
-        assert_eq!(result, expected);
+    quickcheck! {
+        fn new_cube(index: u8) -> bool {
+            let result = Cube::new(index);
+            let expected = Cube { index };
+            result == expected
+        }
     }
 }
