@@ -20,16 +20,18 @@ impl Chunk {
 
 #[cfg(test)]
 mod tests {
+    use quickcheck::quickcheck;
+
     use super::*;
 
-    #[test]
-    fn new_chunk() {
-        let size = 2;
-        let result = Chunk::new(size);
-        let expected = Chunk {
-            size,
-            data: Array3::from_elem(Ix3(size, size, size), Cube::default()),
-        };
-        assert_eq!(result, expected);
+    quickcheck! {
+        fn new_chunk(size: usize) -> bool {
+            let result = Chunk::new(size);
+            let expected = Chunk {
+                size,
+                data: Array3::from_elem(Ix3(size, size, size), Cube::default()),
+            };
+            result == expected
+        }
     }
 }
