@@ -1,5 +1,5 @@
 use bevy::{math::I64Vec3, utils::HashMap};
-use chunk::Chunk;
+use chunk::{Chunk, ChunkNotFoundError};
 use voxel::Voxel;
 
 mod chunk;

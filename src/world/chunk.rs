@@ -1,7 +1,14 @@
 use bevy::math::I64Vec3;
 use ndarray::{Array3, Ix3};
 
-use super::{voxel::Voxel, World};
+use super::{
+    voxel::{Voxel, VoxelNotFoundError},
+    World,
+};
+
+pub mod errors;
+
+pub use errors::*;
 
 #[derive(PartialEq, Debug)]
 pub struct Chunk {
