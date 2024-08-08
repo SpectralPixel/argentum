@@ -4,7 +4,7 @@ use bevy::math::I64Vec3;
 use ndarray::{Array3, Ix3};
 
 use super::{
-    voxel::{Voxel, VoxelNotFoundError},
+    voxel::{Voxel, VoxelNotFoundError, WrappedPositionOutOfBoundsError},
     World,
 };
 
@@ -35,16 +35,17 @@ impl Chunk {
         }
     }
 
-    pub fn set_voxel(&mut self, local_position: &I64Vec3, voxel: Voxel) {
+    pub fn set_voxel(&mut self, local_position: &I64Vec3, voxel: Voxel) -> Result<(), Box<dyn Error>> {
         let I64Vec3 { x, y, z } = *local_position;
-        let x = usize::try_from(x).unwrap();
-        let y = usize::try_from(y).unwrap();
-        let z = usize::try_from(z).unwrap();
+        let x = usize::try_from(x)?;
+        let y = usize::try_from(y)?;
+        let z = usize::try_from(z)?;
         let current_voxel = self
             .data
             .get_mut(Ix3(x, y, z))
-            .expect("Wrapped coordinate out of bounds!");
+            .ok_or(WrappedPositionOutOfBoundsError(local_position.clone()))?;
         *current_voxel = voxel;
+        Ok(())
     }
 
     pub fn world_to_chunk_position(world_position: &I64Vec3) -> I64Vec3 {

@@ -35,13 +35,13 @@ impl World {
         &mut self,
         global_position: &I64Vec3,
         voxel: Voxel,
-    ) -> Result<(), chunk::errors::ChunkNotFoundError> {
+    ) -> Result<(), Box<dyn Error>> {
         let chunk_position = Chunk::world_to_chunk_position(&global_position);
         let local_position = Chunk::world_position_within_chunk(&global_position);
 
         match self.data.get_mut(&chunk_position) {
-            Some(chunk) => chunk.set_voxel(&local_position, voxel),
-            None => return Err(ChunkNotFoundError(chunk_position)),
+            Some(chunk) => chunk.set_voxel(&local_position, voxel)?,
+            None => return Err(Box::new(ChunkNotFoundError(chunk_position))),
         }
 
         Ok(())
