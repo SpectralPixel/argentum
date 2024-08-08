@@ -1,3 +1,5 @@
+use std::error::Error;
+
 use bevy::{math::I64Vec3, utils::HashMap};
 use chunk::{Chunk, ChunkNotFoundError};
 use voxel::Voxel;
@@ -19,14 +21,30 @@ impl World {
         }
     }
 
-    pub fn get_voxel(&self, global_position: &I64Vec3) -> Option<&Voxel> {
+    pub fn get_voxel(&self, global_position: &I64Vec3) -> Result<&Voxel, Box<dyn Error>> {
         let chunk_position = Chunk::world_to_chunk_position(&global_position);
         let local_position = Chunk::world_position_within_chunk(&global_position);
 
         match self.data.get(&chunk_position) {
-            Some(chunk) => chunk.get_voxel(&local_position),
-            None => None,
+            Some(chunk) => Ok(chunk.get_voxel(&local_position)?),
+            None => Err(Box::new(ChunkNotFoundError(chunk_position))),
         }
+    }
+
+    pub fn set_voxel(
+        &mut self,
+        global_position: &I64Vec3,
+        voxel: Voxel,
+    ) -> Result<(), chunk::errors::ChunkNotFoundError> {
+        let chunk_position = Chunk::world_to_chunk_position(&global_position);
+        let local_position = Chunk::world_position_within_chunk(&global_position);
+
+        match self.data.get_mut(&chunk_position) {
+            Some(chunk) => chunk.set_voxel(&local_position, voxel),
+            None => return Err(ChunkNotFoundError(chunk_position)),
+        }
+
+        Ok(())
     }
 
     fn create_chunk(&mut self, chunk_position: &I64Vec3) {
@@ -66,10 +84,10 @@ mod tests {
     }
 
     quickcheck! {
-        fn empty_world(random_x: i64, random_y: i64, random_z: i64) -> bool {
+        fn get_voxel_empty_world(random_x: i64, random_y: i64, random_z: i64) -> bool {
             let world = World::new();
             let position = I64Vec3::new(random_x, random_y, random_z);
-            world.get_voxel(&position).is_none()
+            world.get_voxel(&position).is_err()
         }
     }
 
@@ -78,7 +96,26 @@ mod tests {
         let mut world = World::new();
         world.create_chunk(&I64Vec3::new(0, 0, 0));
         let position = I64Vec3::new(1, 5, 3);
-        let voxel_exists = world.get_voxel(&position).is_some();
+        let voxel_exists = world.get_voxel(&position).is_ok();
+        assert!(voxel_exists);
+    }
+
+    quickcheck! {
+        fn set_voxel_empty_world(random_x: i64, random_y: i64, random_z: i64) -> bool {
+            let mut world = World::new();
+            let position = I64Vec3::new(random_x, random_y, random_z);
+            let new_voxel = Voxel::new(0);
+            world.set_voxel(&position, new_voxel).is_err()
+        }
+    }
+
+    #[test]
+    fn set_then_get_voxel() {
+        let mut world = World::new();
+        world.create_chunk(&I64Vec3::new(0, 0, 0));
+        let position = I64Vec3::new(1, 5, 3);
+        world.set_voxel(&position, Voxel::new(0)).unwrap();
+        let voxel_exists = world.get_voxel(&position).is_ok();
         assert!(voxel_exists);
     }
 }

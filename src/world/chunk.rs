@@ -1,3 +1,5 @@
+use std::error::Error;
+
 use bevy::math::I64Vec3;
 use ndarray::{Array3, Ix3};
 
@@ -22,12 +24,27 @@ impl Chunk {
         Chunk { data: empty_array }
     }
 
-    pub fn get_voxel(&self, local_position: &I64Vec3) -> Option<&Voxel> {
+    pub fn get_voxel(&self, local_position: &I64Vec3) -> Result<&Voxel, Box<dyn Error>> {
         let I64Vec3 { x, y, z } = *local_position;
         let x = usize::try_from(x).unwrap();
         let y = usize::try_from(y).unwrap();
         let z = usize::try_from(z).unwrap();
-        self.data.get(Ix3(x, y, z))
+        match self.data.get(Ix3(x, y, z)) {
+            Some(voxel_reference) => Ok(voxel_reference),
+            None => Err(Box::new(VoxelNotFoundError(local_position.clone()))),
+        }
+    }
+
+    pub fn set_voxel(&mut self, local_position: &I64Vec3, voxel: Voxel) {
+        let I64Vec3 { x, y, z } = *local_position;
+        let x = usize::try_from(x).unwrap();
+        let y = usize::try_from(y).unwrap();
+        let z = usize::try_from(z).unwrap();
+        let current_voxel = self
+            .data
+            .get_mut(Ix3(x, y, z))
+            .expect("Wrapped coordinate out of bounds!");
+        *current_voxel = voxel;
     }
 
     pub fn world_to_chunk_position(world_position: &I64Vec3) -> I64Vec3 {
