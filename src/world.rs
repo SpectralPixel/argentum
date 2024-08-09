@@ -8,7 +8,7 @@ mod chunk;
 mod voxel;
 
 #[derive(Default)]
-struct World {
+pub struct World {
     data: HashMap<I64Vec3, Chunk>,
 }
 

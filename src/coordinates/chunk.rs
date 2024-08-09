@@ -1,6 +1,8 @@
+use crate::{coordinates::{global, GlobalCoord}, world::World};
+
 // i16: From −32,768 to 32,767
 // This should be enough chunks, right?
-type CoordType = i16;
+pub type CoordType = i16;
 
 #[derive(PartialEq, Debug)]
 pub struct ChunkCoord {
@@ -23,6 +25,20 @@ impl ChunkCoord {
 
     pub fn new(x: CoordType, y: CoordType, z: CoordType) -> Self {
         Self { x, y, z }
+    }
+}
+
+impl From<GlobalCoord> for ChunkCoord {
+    fn from(global_position: GlobalCoord) -> Self {
+        fn convert(axis_position: global::CoordType) -> CoordType {
+            CoordType::try_from(axis_position / global::CoordType::try_from(World::CHUNK_SIZE).unwrap()).unwrap()
+        }
+
+        Self {
+            x: convert(global_position.x),
+            y: convert(global_position.y),
+            z: convert(global_position.z),
+        }
     }
 }
 

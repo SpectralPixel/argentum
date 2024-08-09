@@ -1,7 +1,7 @@
 // i32: From −2,147,483,648 to 2,147,483,647
 // I don't believe a larger size is necessary, as the RAM usage per instance
 // would double. Heck, even this is already overkill.
-type CoordType = i32;
+pub type CoordType = i32;
 
 #[derive(PartialEq, Debug)]
 pub struct GlobalCoord {
