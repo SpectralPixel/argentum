@@ -1,27 +1,27 @@
 // u8: From 0 to 255
 // Might need to increase this number if the chunk size grows beyond 255.
-type LocalMaxSize = u8;
+type CoordType = u8;
 
 #[derive(PartialEq, Debug)]
 pub struct LocalCoord {
-    pub x: LocalMaxSize,
-    pub y: LocalMaxSize,
-    pub z: LocalMaxSize,
+    pub x: CoordType,
+    pub y: CoordType,
+    pub z: CoordType,
 }
 
 impl LocalCoord {
     pub const MIN: Self = Self {
-        x: LocalMaxSize::MIN,
-        y: LocalMaxSize::MIN,
-        z: LocalMaxSize::MIN,
+        x: CoordType::MIN,
+        y: CoordType::MIN,
+        z: CoordType::MIN,
     };
     pub const MAX: Self = Self {
-        x: LocalMaxSize::MAX,
-        y: LocalMaxSize::MAX,
-        z: LocalMaxSize::MAX,
+        x: CoordType::MAX,
+        y: CoordType::MAX,
+        z: CoordType::MAX,
     };
 
-    pub fn new(x: LocalMaxSize, y: LocalMaxSize, z: LocalMaxSize) -> Self {
+    pub fn new(x: CoordType, y: CoordType, z: CoordType) -> Self {
         Self { x, y, z }
     }
 }
@@ -33,7 +33,7 @@ mod tests {
     use super::*;
 
     quickcheck! {
-        fn new_position(x: LocalMaxSize, y: LocalMaxSize, z: LocalMaxSize) -> bool {
+        fn new_position(x: CoordType, y: CoordType, z: CoordType) -> bool {
             let result = LocalCoord::new(x, y, z);
             let expected = LocalCoord { x, y, z };
             result == expected
@@ -43,26 +43,26 @@ mod tests {
     #[test]
     fn min_pos() {
         let expected = LocalCoord {
-            x: LocalMaxSize::MIN,
-            y: LocalMaxSize::MIN,
-            z: LocalMaxSize::MIN,
+            x: CoordType::MIN,
+            y: CoordType::MIN,
+            z: CoordType::MIN,
         };
         assert_eq!(expected, LocalCoord::MIN);
-        assert_eq!(expected.x, LocalMaxSize::MIN);
-        assert_eq!(expected.y, LocalMaxSize::MIN);
-        assert_eq!(expected.z, LocalMaxSize::MIN);
+        assert_eq!(expected.x, CoordType::MIN);
+        assert_eq!(expected.y, CoordType::MIN);
+        assert_eq!(expected.z, CoordType::MIN);
     }
 
     #[test]
     fn max_pos() {
         let expected = LocalCoord {
-            x: LocalMaxSize::MAX,
-            y: LocalMaxSize::MAX,
-            z: LocalMaxSize::MAX,
+            x: CoordType::MAX,
+            y: CoordType::MAX,
+            z: CoordType::MAX,
         };
         assert_eq!(expected, LocalCoord::MAX);
-        assert_eq!(expected.x, LocalMaxSize::MAX);
-        assert_eq!(expected.y, LocalMaxSize::MAX);
-        assert_eq!(expected.z, LocalMaxSize::MAX);
+        assert_eq!(expected.x, CoordType::MAX);
+        assert_eq!(expected.y, CoordType::MAX);
+        assert_eq!(expected.z, CoordType::MAX);
     }
 }

@@ -1,28 +1,28 @@
 // i32: From −2,147,483,648 to 2,147,483,647
 // I don't believe a larger size is necessary, as the RAM usage per instance
 // would double. Heck, even this is already overkill.
-type GlobalMaxSize = i32;
+type CoordType = i32;
 
 #[derive(PartialEq, Debug)]
 pub struct GlobalCoord {
-    pub x: GlobalMaxSize,
-    pub y: GlobalMaxSize,
-    pub z: GlobalMaxSize,
+    pub x: CoordType,
+    pub y: CoordType,
+    pub z: CoordType,
 }
 
 impl GlobalCoord {
     pub const MIN: Self = Self {
-        x: GlobalMaxSize::MIN,
-        y: GlobalMaxSize::MIN,
-        z: GlobalMaxSize::MIN,
+        x: CoordType::MIN,
+        y: CoordType::MIN,
+        z: CoordType::MIN,
     };
     pub const MAX: Self = Self {
-        x: GlobalMaxSize::MAX,
-        y: GlobalMaxSize::MAX,
-        z: GlobalMaxSize::MAX,
+        x: CoordType::MAX,
+        y: CoordType::MAX,
+        z: CoordType::MAX,
     };
 
-    pub fn new(x: GlobalMaxSize, y: GlobalMaxSize, z: GlobalMaxSize) -> Self {
+    pub fn new(x: CoordType, y: CoordType, z: CoordType) -> Self {
         Self { x, y, z }
     }
 }
@@ -34,7 +34,7 @@ mod tests {
     use super::*;
 
     quickcheck! {
-        fn new_position(x: GlobalMaxSize, y: GlobalMaxSize, z: GlobalMaxSize) -> bool {
+        fn new_position(x: CoordType, y: CoordType, z: CoordType) -> bool {
             let result = GlobalCoord::new(x, y, z);
             let expected = GlobalCoord { x, y, z };
             result == expected
@@ -44,26 +44,26 @@ mod tests {
     #[test]
     fn min_pos() {
         let expected = GlobalCoord {
-            x: GlobalMaxSize::MIN,
-            y: GlobalMaxSize::MIN,
-            z: GlobalMaxSize::MIN,
+            x: CoordType::MIN,
+            y: CoordType::MIN,
+            z: CoordType::MIN,
         };
         assert_eq!(expected, GlobalCoord::MIN);
-        assert_eq!(expected.x, GlobalMaxSize::MIN);
-        assert_eq!(expected.y, GlobalMaxSize::MIN);
-        assert_eq!(expected.z, GlobalMaxSize::MIN);
+        assert_eq!(expected.x, CoordType::MIN);
+        assert_eq!(expected.y, CoordType::MIN);
+        assert_eq!(expected.z, CoordType::MIN);
     }
 
     #[test]
     fn max_pos() {
         let expected = GlobalCoord {
-            x: GlobalMaxSize::MAX,
-            y: GlobalMaxSize::MAX,
-            z: GlobalMaxSize::MAX,
+            x: CoordType::MAX,
+            y: CoordType::MAX,
+            z: CoordType::MAX,
         };
         assert_eq!(expected, GlobalCoord::MAX);
-        assert_eq!(expected.x, GlobalMaxSize::MAX);
-        assert_eq!(expected.y, GlobalMaxSize::MAX);
-        assert_eq!(expected.z, GlobalMaxSize::MAX);
+        assert_eq!(expected.x, CoordType::MAX);
+        assert_eq!(expected.y, CoordType::MAX);
+        assert_eq!(expected.z, CoordType::MAX);
     }
 }
