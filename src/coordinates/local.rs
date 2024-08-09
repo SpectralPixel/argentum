@@ -1,6 +1,6 @@
 use core::fmt;
 
-use crate::world::World;
+use crate::world_data::World;
 
 use super::*;
 
