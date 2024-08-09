@@ -48,31 +48,31 @@ impl Chunk {
         Ok(())
     }
 
-    pub fn world_to_chunk_position(world_position: &I64Vec3) -> I64Vec3 {
+    pub fn global_to_chunk_coord(global_position: &I64Vec3) -> I64Vec3 {
         let chunk_size = super::World::CHUNK_SIZE as i64;
 
         I64Vec3::new(
-            Self::axis_to_chunk_position(world_position.x, chunk_size),
-            Self::axis_to_chunk_position(world_position.y, chunk_size),
-            Self::axis_to_chunk_position(world_position.z, chunk_size),
+            Self::global_to_chunk_axis(global_position.x, chunk_size),
+            Self::global_to_chunk_axis(global_position.y, chunk_size),
+            Self::global_to_chunk_axis(global_position.z, chunk_size),
         )
     }
 
-    pub fn world_position_within_chunk(world_position: &I64Vec3) -> I64Vec3 {
+    pub fn global_to_local_coord(global_position: &I64Vec3) -> I64Vec3 {
         let chunk_size = super::World::CHUNK_SIZE as i64;
 
         I64Vec3::new(
-            Self::wrap_position_into_chunk(world_position.x, chunk_size),
-            Self::wrap_position_into_chunk(world_position.y, chunk_size),
-            Self::wrap_position_into_chunk(world_position.z, chunk_size),
+            Self::global_to_local_axis(global_position.x, chunk_size),
+            Self::global_to_local_axis(global_position.y, chunk_size),
+            Self::global_to_local_axis(global_position.z, chunk_size),
         )
     }
 
-    fn axis_to_chunk_position(axis_position: i64, chunk_size: i64) -> i64 {
+    fn global_to_chunk_axis(axis_position: i64, chunk_size: i64) -> i64 {
         axis_position / chunk_size
     }
 
-    fn wrap_position_into_chunk(mut axis_position: i64, chunk_size: i64) -> i64 {
+    fn global_to_local_axis(mut axis_position: i64, chunk_size: i64) -> i64 {
         while axis_position < 0 {
             axis_position += chunk_size;
         }
@@ -100,7 +100,7 @@ mod tests {
     quickcheck! {
         fn wrapped_position_within_chunk_bounds(random_x: i64, random_y: i64, random_z: i64) -> bool {
             let position = I64Vec3::new(random_x, random_y, random_z);
-            let wrapped_position = Chunk::world_position_within_chunk(&position);
+            let wrapped_position = Chunk::global_to_local_coord(&position);
 
             let chunk_size = super::super::World::CHUNK_SIZE as i64;
 
@@ -116,7 +116,7 @@ mod tests {
     fn axis_to_chunk_position_1() {
         let position = 34;
         let chunk_size = 32;
-        let result = Chunk::axis_to_chunk_position(position, chunk_size);
+        let result = Chunk::global_to_chunk_axis(position, chunk_size);
         let expected = 1;
         assert_eq!(result, expected);
     }
@@ -125,7 +125,7 @@ mod tests {
     fn axis_to_chunk_position_2() {
         let position = 129;
         let chunk_size = 32;
-        let result = Chunk::axis_to_chunk_position(position, chunk_size);
+        let result = Chunk::global_to_chunk_axis(position, chunk_size);
         let expected = 4;
         assert_eq!(result, expected);
     }
@@ -134,7 +134,7 @@ mod tests {
     fn wrap_position_into_chunk_1() {
         let position = 34;
         let chunk_size = 32;
-        let result = Chunk::wrap_position_into_chunk(position, chunk_size);
+        let result = Chunk::global_to_local_axis(position, chunk_size);
         let expected = 2;
         assert_eq!(result, expected);
     }
@@ -143,7 +143,7 @@ mod tests {
     fn wrap_position_into_chunk_2() {
         let position = 41;
         let chunk_size = 32;
-        let result = Chunk::wrap_position_into_chunk(position, chunk_size);
+        let result = Chunk::global_to_local_axis(position, chunk_size);
         let expected = 9;
         assert_eq!(result, expected);
     }

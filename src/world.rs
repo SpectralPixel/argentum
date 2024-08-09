@@ -22,8 +22,8 @@ impl World {
     }
 
     pub fn get_voxel(&self, global_position: &I64Vec3) -> Result<&Voxel, Box<dyn Error>> {
-        let chunk_position = Chunk::world_to_chunk_position(&global_position);
-        let local_position = Chunk::world_position_within_chunk(&global_position);
+        let chunk_position = Chunk::global_to_chunk_coord(&global_position);
+        let local_position = Chunk::global_to_local_coord(&global_position);
 
         match self.data.get(&chunk_position) {
             Some(chunk) => Ok(chunk.get_voxel(&local_position)?),
@@ -36,8 +36,8 @@ impl World {
         global_position: &I64Vec3,
         voxel: Voxel,
     ) -> Result<(), Box<dyn Error>> {
-        let chunk_position = Chunk::world_to_chunk_position(&global_position);
-        let local_position = Chunk::world_position_within_chunk(&global_position);
+        let chunk_position = Chunk::global_to_chunk_coord(&global_position);
+        let local_position = Chunk::global_to_local_coord(&global_position);
 
         match self.data.get_mut(&chunk_position) {
             Some(chunk) => chunk.set_voxel(&local_position, voxel)?,
