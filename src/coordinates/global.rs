@@ -11,6 +11,17 @@ pub struct GlobalCoord {
 }
 
 impl GlobalCoord {
+    pub const MIN: Self = Self {
+        x: GlobalMaxSize::MIN,
+        y: GlobalMaxSize::MIN,
+        z: GlobalMaxSize::MIN,
+    };
+    pub const MAX: Self = Self {
+        x: GlobalMaxSize::MAX,
+        y: GlobalMaxSize::MAX,
+        z: GlobalMaxSize::MAX,
+    };
+
     pub fn new(x: GlobalMaxSize, y: GlobalMaxSize, z: GlobalMaxSize) -> Self {
         Self { x, y, z }
     }
@@ -28,5 +39,31 @@ mod tests {
             let expected = GlobalCoord { x, y, z };
             result == expected
         }
+    }
+
+    #[test]
+    fn min_pos() {
+        let expected = GlobalCoord {
+            x: GlobalMaxSize::MIN,
+            y: GlobalMaxSize::MIN,
+            z: GlobalMaxSize::MIN,
+        };
+        assert_eq!(expected, GlobalCoord::MIN);
+        assert_eq!(expected.x, GlobalMaxSize::MIN);
+        assert_eq!(expected.y, GlobalMaxSize::MIN);
+        assert_eq!(expected.z, GlobalMaxSize::MIN);
+    }
+
+    #[test]
+    fn max_pos() {
+        let expected = GlobalCoord {
+            x: GlobalMaxSize::MAX,
+            y: GlobalMaxSize::MAX,
+            z: GlobalMaxSize::MAX,
+        };
+        assert_eq!(expected, GlobalCoord::MAX);
+        assert_eq!(expected.x, GlobalMaxSize::MAX);
+        assert_eq!(expected.y, GlobalMaxSize::MAX);
+        assert_eq!(expected.z, GlobalMaxSize::MAX);
     }
 }

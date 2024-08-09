@@ -10,6 +10,17 @@ pub struct ChunkCoord {
 }
 
 impl ChunkCoord {
+    pub const MIN: Self = Self {
+        x: ChunkMaxSize::MIN,
+        y: ChunkMaxSize::MIN,
+        z: ChunkMaxSize::MIN,
+    };
+    pub const MAX: Self = Self {
+        x: ChunkMaxSize::MAX,
+        y: ChunkMaxSize::MAX,
+        z: ChunkMaxSize::MAX,
+    };
+
     pub fn new(x: ChunkMaxSize, y: ChunkMaxSize, z: ChunkMaxSize) -> Self {
         Self { x, y, z }
     }
@@ -27,5 +38,31 @@ mod tests {
             let expected = ChunkCoord { x, y, z };
             result == expected
         }
+    }
+
+    #[test]
+    fn min_pos() {
+        let expected = ChunkCoord {
+            x: ChunkMaxSize::MIN,
+            y: ChunkMaxSize::MIN,
+            z: ChunkMaxSize::MIN,
+        };
+        assert_eq!(expected, ChunkCoord::MIN);
+        assert_eq!(expected.x, ChunkMaxSize::MIN);
+        assert_eq!(expected.y, ChunkMaxSize::MIN);
+        assert_eq!(expected.z, ChunkMaxSize::MIN);
+    }
+
+    #[test]
+    fn max_pos() {
+        let expected = ChunkCoord {
+            x: ChunkMaxSize::MAX,
+            y: ChunkMaxSize::MAX,
+            z: ChunkMaxSize::MAX,
+        };
+        assert_eq!(expected, ChunkCoord::MAX);
+        assert_eq!(expected.x, ChunkMaxSize::MAX);
+        assert_eq!(expected.y, ChunkMaxSize::MAX);
+        assert_eq!(expected.z, ChunkMaxSize::MAX);
     }
 }
