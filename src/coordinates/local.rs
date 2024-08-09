@@ -1,12 +1,14 @@
+use core::fmt;
+
 use crate::world::World;
 
-use super::{GlobalCoord, global};
+use super::*;
 
 // u8: From 0 to 255
 // Might need to increase this number if the chunk size grows beyond 255.
 pub type CoordType = u8;
 
-#[derive(PartialEq, Debug)]
+#[derive(PartialEq, Debug, Clone)]
 pub struct LocalCoord {
     pub x: CoordType,
     pub y: CoordType,
@@ -30,15 +32,21 @@ impl LocalCoord {
     }
 }
 
+impl fmt::Display for LocalCoord {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(f, "LocalCoord ({}, {}, {})", self.x, self.y, self.z)
+    }
+}
+
 impl From<GlobalCoord> for LocalCoord {
     fn from(global_position: GlobalCoord) -> Self {
-        fn convert(mut axis_position: global::CoordType) -> CoordType {
-            let chunk_size = global::CoordType::try_from(World::CHUNK_SIZE).unwrap();
-    
+        fn convert(mut axis_position: GlobalCoordType) -> CoordType {
+            let chunk_size = GlobalCoordType::try_from(World::CHUNK_SIZE).unwrap();
+
             while axis_position < 0 {
                 axis_position += chunk_size;
             }
-    
+
             CoordType::try_from(axis_position % chunk_size).unwrap()
         }
 
@@ -103,5 +111,12 @@ mod tests {
 
             x_is_wrapped && y_is_wrapped && z_is_wrapped
         }
+    }
+
+    #[test]
+    fn display() {
+        let pos = GlobalCoord { x: 1, y: 2, z: 3 };
+
+        assert_eq!(pos.to_string(), "GlobalCoord (1, 2, 3)")
     }
 }

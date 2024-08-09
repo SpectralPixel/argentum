@@ -1,10 +1,12 @@
-use crate::{coordinates::{global, GlobalCoord}, world::World};
+use core::fmt;
 
-// i16: From −32,768 to 32,767
-// This should be enough chunks, right?
-pub type CoordType = i16;
+use crate::{coordinates::*, world::World};
 
-#[derive(PartialEq, Debug)]
+// i32: From −2,147,483,648 to 2,147,483,647
+// Had to make i32 because of failing test with i16...
+pub type CoordType = i32;
+
+#[derive(PartialEq, Debug, Clone, Eq, Hash)]
 pub struct ChunkCoord {
     pub x: CoordType,
     pub y: CoordType,
@@ -28,10 +30,19 @@ impl ChunkCoord {
     }
 }
 
+impl fmt::Display for ChunkCoord {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(f, "ChunkCoord ({}, {}, {})", self.x, self.y, self.z)
+    }
+}
+
 impl From<GlobalCoord> for ChunkCoord {
     fn from(global_position: GlobalCoord) -> Self {
-        fn convert(axis_position: global::CoordType) -> CoordType {
-            CoordType::try_from(axis_position / global::CoordType::try_from(World::CHUNK_SIZE).unwrap()).unwrap()
+        fn convert(axis_position: GlobalCoordType) -> CoordType {
+            CoordType::try_from(
+                axis_position / GlobalCoordType::try_from(World::CHUNK_SIZE).unwrap(),
+            )
+            .unwrap()
         }
 
         Self {
@@ -80,5 +91,12 @@ mod tests {
         assert_eq!(expected.x, CoordType::MAX);
         assert_eq!(expected.y, CoordType::MAX);
         assert_eq!(expected.z, CoordType::MAX);
+    }
+
+    #[test]
+    fn display() {
+        let pos = ChunkCoord { x: 1, y: 2, z: 3 };
+
+        assert_eq!(pos.to_string(), "ChunkCoord (1, 2, 3)")
     }
 }
