@@ -1,3 +1,4 @@
+mod coordinates;
 mod world;
 
 #[cfg(test)]

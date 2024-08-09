@@ -1,9 +1,9 @@
 use std::{error::Error, fmt};
 
-use bevy::math::I64Vec3;
+use crate::coordinates::ChunkCoord;
 
 #[derive(Debug, Clone)]
-pub struct ChunkNotFoundError(pub I64Vec3);
+pub struct ChunkNotFoundError(pub ChunkCoord);
 
 impl fmt::Display for ChunkNotFoundError {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
