@@ -18,7 +18,11 @@ pub struct WrappedPositionOutOfBoundsError(pub I64Vec3);
 
 impl fmt::Display for WrappedPositionOutOfBoundsError {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "Local coordinate {} is out of bounds! Are you using a 32-bit system?", self.0)
+        write!(
+            f,
+            "Local coordinate {} is out of bounds! Are you using a 32-bit system?",
+            self.0
+        )
     }
 }
 

@@ -1,5 +1,5 @@
-mod world;
 mod coordinates;
+mod world;
 
 #[cfg(test)]
 mod tests {

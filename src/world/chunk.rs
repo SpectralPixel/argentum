@@ -35,7 +35,11 @@ impl Chunk {
         }
     }
 
-    pub fn set_voxel(&mut self, local_position: &I64Vec3, voxel: Voxel) -> Result<(), Box<dyn Error>> {
+    pub fn set_voxel(
+        &mut self,
+        local_position: &I64Vec3,
+        voxel: Voxel,
+    ) -> Result<(), Box<dyn Error>> {
         let I64Vec3 { x, y, z } = *local_position;
         let x = usize::try_from(x)?;
         let y = usize::try_from(y)?;
