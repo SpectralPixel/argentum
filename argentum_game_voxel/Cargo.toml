@@ -2,6 +2,7 @@
 name = "argentum_game_voxel"
 version = "0.1.0"
 edition = "2021"
+description = "Argentum: Voxel Type"
 license = "AGPL-3.0-only"
 
 [dependencies]

@@ -1,6 +1,6 @@
 //! # Argentum - Voxel
 //! 
-//! `argentum_game_voxel` contains the voxel type used for Argentum.
+//! `argentum_game_voxel` contains the voxel type used in Argentum.
 //! 
 //! For more information about Argentum, see the `argentum_game` crate.
 
