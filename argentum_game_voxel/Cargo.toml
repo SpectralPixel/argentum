@@ -6,4 +6,4 @@ description = "Argentum: Voxel Type"
 license = "AGPL-3.0-only"
 
 [dependencies]
-quickcheck = "1.0.3"
+quickcheck = { version = "1.0.3", default-features = false }
