@@ -14,6 +14,7 @@ use core::fmt;
 /// would double. Heck, even this is already overkill.
 pub type GlobalCoordType = i32;
 
+/// 3D Coordinate in absolute space
 #[derive(PartialEq, Debug, Clone)]
 pub struct GlobalCoord {
     pub x: GlobalCoordType,
