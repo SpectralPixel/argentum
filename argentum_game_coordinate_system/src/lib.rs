@@ -56,6 +56,17 @@ impl GlobalCoord {
         z: GlobalCoordType::MAX,
     };
 
+    /// Creates a new GlobalCoord
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use argentum_game_coordinate_system::GlobalCoord;
+    /// let pos = GlobalCoord::new(1, 2, 3);
+    /// assert_eq!(pos.x, 1);
+    /// assert_eq!(pos.y, 2);
+    /// assert_eq!(pos.z, 3);
+    /// ```
     pub fn new(x: GlobalCoordType, y: GlobalCoordType, z: GlobalCoordType) -> Self {
         Self { x, y, z }
     }
