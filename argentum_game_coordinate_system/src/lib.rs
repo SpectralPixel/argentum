@@ -1,3 +1,10 @@
+//! # Argentum - Coordinate System
+//!
+//! `argentum_game_voxel` contains the coordinate system that is used by
+//! Argentum and some utilities related to it.
+//!
+//! For more information about Argentum, see the `argentum_game` crate.
+
 use core::fmt;
 
 // i32: From −2,147,483,648 to 2,147,483,647
