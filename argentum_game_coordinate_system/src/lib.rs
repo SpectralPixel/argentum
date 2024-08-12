@@ -7,14 +7,15 @@
 
 use core::fmt;
 
-/// `GlobalCoord`'s field type
+/// `GlobalCoord`'s field type.
 /// 
-/// i32: From −2,147,483,648 to 2,147,483,647
+/// i32: From −2,147,483,648 to 2,147,483,647.
+/// 
 /// I don't believe a larger size is necessary, as the RAM usage per instance
 /// would double. Heck, even this is already overkill.
 pub type GlobalCoordType = i32;
 
-/// 3D Coordinate in absolute space
+/// 3D Coordinate in absolute space.
 #[derive(PartialEq, Debug, Clone)]
 pub struct GlobalCoord {
     pub x: GlobalCoordType,
