@@ -24,11 +24,18 @@ pub struct GlobalCoord {
 }
 
 impl GlobalCoord {
+    /// Represents the smallest possible coordinate on all axes.
+    /// 
+    /// All axes are currently set to `GlobalCoordType::MIN`.
     pub const MIN: Self = Self {
         x: GlobalCoordType::MIN,
         y: GlobalCoordType::MIN,
         z: GlobalCoordType::MIN,
     };
+
+    /// Represents the largest possible coordinate on all axes.
+    /// 
+    /// All axes are currently set to `GlobalCoordType::MAX`.
     pub const MAX: Self = Self {
         x: GlobalCoordType::MAX,
         y: GlobalCoordType::MAX,
