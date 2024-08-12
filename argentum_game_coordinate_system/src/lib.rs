@@ -26,13 +26,13 @@ pub struct GlobalCoord {
 impl GlobalCoord {
     /// Represents the smallest possible coordinate on all axes.
     /// 
-    /// All axes are currently set to `GlobalCoordType::MIN`.
-    /// 
     /// # Examples
     /// 
     /// ```
     /// use argentum_game_coordinate_system::{GlobalCoordType, GlobalCoord};
     /// assert_eq!(GlobalCoord::MIN.x, GlobalCoordType::MIN);
+    /// assert_eq!(GlobalCoord::MIN.y, GlobalCoordType::MIN);
+    /// assert_eq!(GlobalCoord::MIN.z, GlobalCoordType::MIN);
     /// ```
     pub const MIN: Self = Self {
         x: GlobalCoordType::MIN,
@@ -42,13 +42,13 @@ impl GlobalCoord {
 
     /// Represents the largest possible coordinate on all axes.
     /// 
-    /// All axes are currently set to `GlobalCoordType::MAX`.
-    /// 
     /// # Examples
     /// 
     /// ```
     /// use argentum_game_coordinate_system::{GlobalCoordType, GlobalCoord};
     /// assert_eq!(GlobalCoord::MAX.x, GlobalCoordType::MAX);
+    /// assert_eq!(GlobalCoord::MAX.y, GlobalCoordType::MAX);
+    /// assert_eq!(GlobalCoord::MAX.z, GlobalCoordType::MAX);
     /// ```
     pub const MAX: Self = Self {
         x: GlobalCoordType::MAX,
