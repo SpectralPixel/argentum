@@ -7,74 +7,74 @@
 
 use core::fmt;
 
-/// `GlobalCoord`'s field type.
-/// 
+/// `Coordinate`'s field type.
+///
 /// i32: From −2,147,483,648 to 2,147,483,647.
-/// 
+///
 /// I don't believe a larger size is necessary, as the RAM usage per instance
 /// would double. Heck, even this is already overkill.
-pub type GlobalCoordType = i32;
+pub type CoordinateType = i32;
 
 /// 3D Coordinate in absolute space.
 #[derive(PartialEq, Debug, Clone)]
-pub struct GlobalCoord {
-    pub x: GlobalCoordType,
-    pub y: GlobalCoordType,
-    pub z: GlobalCoordType,
+pub struct Coordinate {
+    pub x: CoordinateType,
+    pub y: CoordinateType,
+    pub z: CoordinateType,
 }
 
-impl GlobalCoord {
+impl Coordinate {
     /// Represents the smallest possible coordinate on all axes.
-    /// 
+    ///
     /// # Examples
-    /// 
+    ///
     /// ```
-    /// use argentum_game_coordinate_system::{GlobalCoordType, GlobalCoord};
-    /// assert_eq!(GlobalCoord::MIN.x, GlobalCoordType::MIN);
-    /// assert_eq!(GlobalCoord::MIN.y, GlobalCoordType::MIN);
-    /// assert_eq!(GlobalCoord::MIN.z, GlobalCoordType::MIN);
+    /// use argentum_game_coordinate_system::{CoordinateType, Coordinate};
+    /// assert_eq!(Coordinate::MIN.x, CoordinateType::MIN);
+    /// assert_eq!(Coordinate::MIN.y, CoordinateType::MIN);
+    /// assert_eq!(Coordinate::MIN.z, CoordinateType::MIN);
     /// ```
     pub const MIN: Self = Self {
-        x: GlobalCoordType::MIN,
-        y: GlobalCoordType::MIN,
-        z: GlobalCoordType::MIN,
+        x: CoordinateType::MIN,
+        y: CoordinateType::MIN,
+        z: CoordinateType::MIN,
     };
 
     /// Represents the largest possible coordinate on all axes.
-    /// 
+    ///
     /// # Examples
-    /// 
+    ///
     /// ```
-    /// use argentum_game_coordinate_system::{GlobalCoordType, GlobalCoord};
-    /// assert_eq!(GlobalCoord::MAX.x, GlobalCoordType::MAX);
-    /// assert_eq!(GlobalCoord::MAX.y, GlobalCoordType::MAX);
-    /// assert_eq!(GlobalCoord::MAX.z, GlobalCoordType::MAX);
+    /// use argentum_game_coordinate_system::{CoordinateType, Coordinate};
+    /// assert_eq!(Coordinate::MAX.x, CoordinateType::MAX);
+    /// assert_eq!(Coordinate::MAX.y, CoordinateType::MAX);
+    /// assert_eq!(Coordinate::MAX.z, CoordinateType::MAX);
     /// ```
     pub const MAX: Self = Self {
-        x: GlobalCoordType::MAX,
-        y: GlobalCoordType::MAX,
-        z: GlobalCoordType::MAX,
+        x: CoordinateType::MAX,
+        y: CoordinateType::MAX,
+        z: CoordinateType::MAX,
     };
 
-    /// Creates a new GlobalCoord
+    /// Creates a new Coordinate
     ///
     /// # Examples
     ///
     /// ```
-    /// use argentum_game_coordinate_system::GlobalCoord;
-    /// let pos = GlobalCoord::new(1, 2, 3);
+    /// use argentum_game_coordinate_system::Coordinate;
+    /// let pos = Coordinate::new(1, 2, 3);
     /// assert_eq!(pos.x, 1);
     /// assert_eq!(pos.y, 2);
     /// assert_eq!(pos.z, 3);
     /// ```
-    pub fn new(x: GlobalCoordType, y: GlobalCoordType, z: GlobalCoordType) -> Self {
+    pub fn new(x: CoordinateType, y: CoordinateType, z: CoordinateType) -> Self {
         Self { x, y, z }
     }
 }
 
-impl fmt::Display for GlobalCoord {
+impl fmt::Display for Coordinate {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "GlobalCoord ({}, {}, {})", self.x, self.y, self.z)
+        write!(f, "Coordinate ({}, {}, {})", self.x, self.y, self.z)
     }
 }
 
@@ -85,43 +85,43 @@ mod tests {
     use super::*;
 
     quickcheck! {
-        fn new_position(x: GlobalCoordType, y: GlobalCoordType, z: GlobalCoordType) -> bool {
-            let result = GlobalCoord::new(x, y, z);
-            let expected = GlobalCoord { x, y, z };
+        fn new_position(x: CoordinateType, y: CoordinateType, z: CoordinateType) -> bool {
+            let result = Coordinate::new(x, y, z);
+            let expected = Coordinate { x, y, z };
             result == expected
         }
     }
 
     #[test]
     fn min_pos() {
-        let expected = GlobalCoord {
-            x: GlobalCoordType::MIN,
-            y: GlobalCoordType::MIN,
-            z: GlobalCoordType::MIN,
+        let expected = Coordinate {
+            x: CoordinateType::MIN,
+            y: CoordinateType::MIN,
+            z: CoordinateType::MIN,
         };
-        assert_eq!(expected, GlobalCoord::MIN);
-        assert_eq!(expected.x, GlobalCoordType::MIN);
-        assert_eq!(expected.y, GlobalCoordType::MIN);
-        assert_eq!(expected.z, GlobalCoordType::MIN);
+        assert_eq!(expected, Coordinate::MIN);
+        assert_eq!(expected.x, CoordinateType::MIN);
+        assert_eq!(expected.y, CoordinateType::MIN);
+        assert_eq!(expected.z, CoordinateType::MIN);
     }
 
     #[test]
     fn max_pos() {
-        let expected = GlobalCoord {
-            x: GlobalCoordType::MAX,
-            y: GlobalCoordType::MAX,
-            z: GlobalCoordType::MAX,
+        let expected = Coordinate {
+            x: CoordinateType::MAX,
+            y: CoordinateType::MAX,
+            z: CoordinateType::MAX,
         };
-        assert_eq!(expected, GlobalCoord::MAX);
-        assert_eq!(expected.x, GlobalCoordType::MAX);
-        assert_eq!(expected.y, GlobalCoordType::MAX);
-        assert_eq!(expected.z, GlobalCoordType::MAX);
+        assert_eq!(expected, Coordinate::MAX);
+        assert_eq!(expected.x, CoordinateType::MAX);
+        assert_eq!(expected.y, CoordinateType::MAX);
+        assert_eq!(expected.z, CoordinateType::MAX);
     }
 
     #[test]
     fn display() {
-        let pos = GlobalCoord { x: 1, y: 2, z: 3 };
+        let pos = Coordinate { x: 1, y: 2, z: 3 };
 
-        assert_eq!(pos.to_string(), "GlobalCoord (1, 2, 3)")
+        assert_eq!(pos.to_string(), "Coordinate (1, 2, 3)")
     }
 }
