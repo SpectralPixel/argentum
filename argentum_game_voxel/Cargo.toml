@@ -1,9 +1,9 @@
 [package]
 name = "argentum_game_voxel"
-version = "0.1.0"
+version = "0.2.0"
 edition = "2021"
 description = "Argentum: Voxel Type"
-license = "AGPL-3.0-only"
+license = "AGPL-3.0-or-later"
 
 [dependencies]
 quickcheck = { version = "1.0.3", default-features = false }
