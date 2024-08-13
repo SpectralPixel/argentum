@@ -6,5 +6,7 @@
 //! For more information about Argentum, see the `argentum_game` crate.
 
 mod coordinate;
+mod region;
 
 pub use coordinate::{Coordinate, CoordinateType};
+pub use region::Region;
