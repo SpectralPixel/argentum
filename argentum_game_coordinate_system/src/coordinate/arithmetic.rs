@@ -1,11 +1,10 @@
-use crate::{Coordinate, CoordinateType};
+use crate::{Coordinate, CoordinateOutOfBoundsError, CoordinateType};
 use std::ops::*;
 
 impl Add for Coordinate {
     type Output = Self;
 
     fn add(self, rhs: Self) -> Self::Output {
-        use crate::CoordinateOutOfBoundsError;
         let panic_if_out_of_bounds = || panic!("{}", CoordinateOutOfBoundsError(self.to_owned()));
         let x = CoordinateType::checked_add(self.x, rhs.x).unwrap_or_else(panic_if_out_of_bounds);
         let y = CoordinateType::checked_add(self.y, rhs.y).unwrap_or_else(panic_if_out_of_bounds);
@@ -24,7 +23,6 @@ impl Sub for Coordinate {
     type Output = Self;
 
     fn sub(self, rhs: Self) -> Self::Output {
-        use crate::CoordinateOutOfBoundsError;
         let panic_if_out_of_bounds = || panic!("{}", CoordinateOutOfBoundsError(self.to_owned()));
         let x = CoordinateType::checked_sub(self.x, rhs.x).unwrap_or_else(panic_if_out_of_bounds);
         let y = CoordinateType::checked_sub(self.y, rhs.y).unwrap_or_else(panic_if_out_of_bounds);
@@ -43,7 +41,6 @@ impl Mul for Coordinate {
     type Output = Self;
 
     fn mul(self, rhs: Self) -> Self::Output {
-        use crate::CoordinateOutOfBoundsError;
         let panic_if_out_of_bounds = || panic!("{}", CoordinateOutOfBoundsError(self.to_owned()));
         let x = CoordinateType::checked_mul(self.x, rhs.x).unwrap_or_else(panic_if_out_of_bounds);
         let y = CoordinateType::checked_mul(self.y, rhs.y).unwrap_or_else(panic_if_out_of_bounds);
@@ -62,7 +59,6 @@ impl Div for Coordinate {
     type Output = Self;
 
     fn div(self, rhs: Self) -> Self::Output {
-        use crate::CoordinateOutOfBoundsError;
         let panic_if_out_of_bounds = || panic!("{}", CoordinateOutOfBoundsError(self.to_owned()));
         let x = CoordinateType::checked_div(self.x, rhs.x).unwrap_or_else(panic_if_out_of_bounds);
         let y = CoordinateType::checked_div(self.y, rhs.y).unwrap_or_else(panic_if_out_of_bounds);
@@ -89,11 +85,7 @@ impl BitAnd for Coordinate {
     type Output = Self;
 
     fn bitand(self, rhs: Self) -> Self::Output {
-        Self::new(
-            self.x & rhs.x,
-            self.y & rhs.y,
-            self.z & rhs.z,
-        )
+        Self::new(self.x & rhs.x, self.y & rhs.y, self.z & rhs.z)
     }
 }
 
@@ -107,17 +99,27 @@ impl BitOr for Coordinate {
     type Output = Self;
 
     fn bitor(self, rhs: Self) -> Self::Output {
-        Self::new(
-            self.x | rhs.x,
-            self.y | rhs.y,
-            self.z | rhs.z,
-        )
+        Self::new(self.x | rhs.x, self.y | rhs.y, self.z | rhs.z)
     }
 }
 
 impl BitOrAssign for Coordinate {
     fn bitor_assign(&mut self, rhs: Self) {
         *self = self.to_owned() | rhs;
+    }
+}
+
+impl BitXor for Coordinate {
+    type Output = Self;
+
+    fn bitxor(self, rhs: Self) -> Self::Output {
+        Self::new(self.x ^ rhs.x, self.y ^ rhs.y, self.z ^ rhs.z)
+    }
+}
+
+impl BitXorAssign for Coordinate {
+    fn bitxor_assign(&mut self, rhs: Self) {
+        *self = self.to_owned() ^ rhs;
     }
 }
 
@@ -217,70 +219,56 @@ mod tests {
     }
 
     #[test]
-    fn and() {
-        let coord_a = Coordinate::new(
-            0b10101010,
-            0b00001111,
-            0b10101100,
-        );
+    fn bit_and() {
+        let coord_a = Coordinate::new(0b10101010, 0b00001111, 0b10101100);
         let coord_b = Coordinate::splat(0b11001100);
         let result = coord_a & coord_b;
-        let expected = Coordinate::new(
-            0b10001000,
-            0b00001100,
-            0b10001100,
-        );
+        let expected = Coordinate::new(0b10001000, 0b00001100, 0b10001100);
         assert_eq!(result, expected);
     }
 
     #[test]
-    fn and_assign() {
-        let mut coord_a = Coordinate::new(
-            0b10101010,
-            0b00001111,
-            0b10101100,
-        );
+    fn bit_and_assign() {
+        let mut coord_a = Coordinate::new(0b10101010, 0b00001111, 0b10101100);
         let coord_b = Coordinate::splat(0b11001100);
         coord_a &= coord_b;
-        let expected = Coordinate::new(
-            0b10001000,
-            0b00001100,
-            0b10001100,
-        );
+        let expected = Coordinate::new(0b10001000, 0b00001100, 0b10001100);
         assert_eq!(coord_a, expected);
     }
 
     #[test]
-    fn or() {
-        let coord_a = Coordinate::new(
-            0b10101010,
-            0b00001111,
-            0b10101100,
-        );
+    fn bit_or() {
+        let coord_a = Coordinate::new(0b10101010, 0b00001111, 0b10101100);
         let coord_b = Coordinate::splat(0b11001100);
         let result = coord_a | coord_b;
-        let expected = Coordinate::new(
-            0b11101110,
-            0b11001111,
-            0b11101100,
-        );
+        let expected = Coordinate::new(0b11101110, 0b11001111, 0b11101100);
         assert_eq!(result, expected);
     }
 
     #[test]
-    fn or_assign() {
-        let mut coord_a = Coordinate::new(
-            0b10101010,
-            0b00001111,
-            0b10101100,
-        );
+    fn bit_or_assign() {
+        let mut coord_a = Coordinate::new(0b10101010, 0b00001111, 0b10101100);
         let coord_b = Coordinate::splat(0b11001100);
         coord_a |= coord_b;
-        let expected = Coordinate::new(
-            0b11101110,
-            0b11001111,
-            0b11101100,
-        );
+        let expected = Coordinate::new(0b11101110, 0b11001111, 0b11101100);
+        assert_eq!(coord_a, expected);
+    }
+
+    #[test]
+    fn bit_xor() {
+        let coord_a = Coordinate::new(0b10101010, 0b00001111, 0b10101100);
+        let coord_b = Coordinate::splat(0b11001100);
+        let result = coord_a ^ coord_b;
+        let expected = Coordinate::new(0b01100110, 0b11000011, 0b01100000);
+        assert_eq!(result, expected);
+    }
+
+    #[test]
+    fn bit_xor_assign() {
+        let mut coord_a = Coordinate::new(0b10101010, 0b00001111, 0b10101100);
+        let coord_b = Coordinate::splat(0b11001100);
+        coord_a ^= coord_b;
+        let expected = Coordinate::new(0b01100110, 0b11000011, 0b01100000);
         assert_eq!(coord_a, expected);
     }
 }
