@@ -61,6 +61,22 @@ impl Coordinate {
     pub fn new(x: CoordinateType, y: CoordinateType, z: CoordinateType) -> Self {
         Self { x, y, z }
     }
+
+
+    /// Creates a new coordinate, assigning all values to the input.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use argentum_game_coordinate_system::Coordinate;
+    /// let pos = Coordinate::splat(7);
+    /// assert_eq!(pos.x, 7);
+    /// assert_eq!(pos.y, 7);
+    /// assert_eq!(pos.z, 7);
+    /// ```
+    pub fn splat(n: CoordinateType) -> Self {
+        Self::new(n, n, n)
+    }
 }
 
 impl core::fmt::Display for Coordinate {
@@ -168,5 +184,12 @@ mod tests {
         result += Coordinate::new(-5, 10, 23);
         let expected = Coordinate::new(5, 25, 53);
         assert_eq!(result, expected);
+    }
+
+    quickcheck! {
+        fn splat(n: CoordinateType) -> bool {
+            let coord = Coordinate::splat(n);
+            coord.x == coord.y && coord.y == coord.z
+        }
     }
 }
