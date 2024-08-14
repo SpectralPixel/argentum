@@ -3,7 +3,7 @@ use std::{error::Error, fmt};
 use crate::Coordinate;
 
 #[derive(Debug, Clone)]
-pub struct CoordinateOutOfBoundsError(Coordinate);
+pub struct CoordinateOutOfBoundsError(pub Coordinate);
 
 impl fmt::Display for CoordinateOutOfBoundsError {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
