@@ -1,5 +1,32 @@
 use crate::{Coordinate, CoordinateType};
 
+/// Cube-shaped iterator of `Coordinate`s
+/// 
+/// The iterator returns all `Coordinate`s from `position` to `position + size - 1`
+/// 
+/// # Examples
+/// 
+/// ```
+/// use argentum_game_coordinate_system::{Coordinate, Region};
+/// 
+/// let mut coord_vec: Vec<Coordinate> = Vec::new();
+/// coord_vec.push(Coordinate::new(7, 7, 7));
+/// coord_vec.push(Coordinate::new(8, 7, 7));
+/// coord_vec.push(Coordinate::new(7, 8, 7));
+/// coord_vec.push(Coordinate::new(8, 8, 7));
+/// coord_vec.push(Coordinate::new(7, 7, 8));
+/// coord_vec.push(Coordinate::new(8, 7, 8));
+/// coord_vec.push(Coordinate::new(7, 8, 8));
+/// coord_vec.push(Coordinate::new(8, 8, 8));
+/// 
+/// let mut i = 0;
+/// let region = Region::new(Coordinate::splat(7), 2);
+/// for coord in region {
+///     println!("{i}");
+///     assert_eq!(coord, coord_vec[i]);
+///     i += 1;
+/// }
+/// ```
 #[derive(PartialEq, Debug)]
 pub struct Region {
     position: Coordinate,
