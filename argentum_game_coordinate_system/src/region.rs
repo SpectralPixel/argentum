@@ -24,10 +24,9 @@ mod tests {
     use super::*;
 
     quickcheck! {
-        fn new_region(size: CoordinateType) -> bool {
-            let coordinate = Coordinate::new(0,0,0);
-            let result = Region::new(coordinate.clone(), size);
-            let expected = Region { position: coordinate.clone(), size, offset: coordinate.clone() };
+        fn new_region(position: Coordinate, size: CoordinateType) -> bool {
+            let result = Region::new(position.clone(), size);
+            let expected = Region { position, size, offset: Coordinate::new(0,0,0), };
             result == expected
         }
     }
