@@ -77,6 +77,14 @@ impl DivAssign for Coordinate {
     }
 }
 
+impl Neg for Coordinate {
+    type Output = Self;
+
+    fn neg(self) -> Self::Output {
+        Self::new(-self.x, -self.y, -self.z)
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -163,5 +171,12 @@ mod tests {
     #[should_panic]
     fn div_by_zero() {
         let _ = Coordinate::MAX / Coordinate::splat(0);
+    }
+
+    #[test]
+    fn neg() {
+        let result = -Coordinate::splat(7);
+        let expected = Coordinate::splat(-7);
+        assert_eq!(result, expected);
     }
 }
