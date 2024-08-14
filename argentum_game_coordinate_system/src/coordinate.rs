@@ -1,4 +1,5 @@
 use core::fmt;
+use std::ops::Add;
 
 /// `Coordinate`'s field type.
 ///
@@ -81,6 +82,18 @@ impl quickcheck::Arbitrary for Coordinate {
     }
 }
 
+impl Add for Coordinate {
+    type Output = Self;
+
+    fn add(self, rhs: Self) -> Self::Output {
+        Self::new(
+            self.x + rhs.x,
+            self.y + rhs.y,
+            self.z + rhs.z,
+        )
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use quickcheck::quickcheck;
@@ -135,5 +148,12 @@ mod tests {
         let pos = Coordinate { x: 1, y: 2, z: 3 };
 
         assert_eq!(pos.to_string(), "Coordinate (1, 2, 3)")
+    }
+
+    #[test]
+    fn add() {
+        let result = Coordinate::new(1, 2, 3) + Coordinate::new(5, 0, 10);
+        let expected = Coordinate::new(6, 2, 13);
+        assert_eq!(result, expected);
     }
 }
