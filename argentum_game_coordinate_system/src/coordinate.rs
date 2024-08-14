@@ -163,7 +163,7 @@ mod tests {
     fn display() {
         let pos = Coordinate { x: 1, y: 2, z: 3 };
 
-        assert_eq!(pos.to_string(), "Coordinate (1, 2, 3)")
+        assert_eq!(pos.to_string(), "(1, 2, 3)")
     }
 
     #[test]
