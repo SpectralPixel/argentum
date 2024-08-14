@@ -1,4 +1,4 @@
-use crate::{Coordinate, CoordinateOutOfBoundsError, CoordinateType};
+use crate::{errors::CoordinateOutOfBoundsError, Coordinate, CoordinateType};
 use std::ops::*;
 
 impl Add for Coordinate {

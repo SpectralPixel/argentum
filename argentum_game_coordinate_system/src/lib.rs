@@ -10,5 +10,4 @@ mod errors;
 mod region;
 
 pub use coordinate::{Coordinate, CoordinateType};
-pub use errors::CoordinateOutOfBoundsError;
 pub use region::Region;
