@@ -63,13 +63,4 @@ mod tests {
             result == expected
         }
     }
-
-    #[test]
-    fn iterate() {
-        let region = Region::new(Coordinate::new(0, 0, 0), 10);
-        region
-            .into_iter()
-            .filter(|pos| pos.x == 0)
-            .for_each(|pos| assert!(pos.x == 0));
-    }
 }
