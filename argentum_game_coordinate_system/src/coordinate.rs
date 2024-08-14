@@ -1,3 +1,5 @@
+use crate::CoordinateOutOfBoundsError;
+
 /// `Coordinate`'s field type.
 ///
 /// i32: From −2,147,483,648 to 2,147,483,647.
@@ -98,15 +100,17 @@ impl std::ops::Add for Coordinate {
     type Output = Self;
 
     fn add(self, rhs: Self) -> Self::Output {
-        Self::new(self.x + rhs.x, self.y + rhs.y, self.z + rhs.z)
+        let panic_if_out_of_bounds = || panic!("{}", CoordinateOutOfBoundsError(self.to_owned()));
+        let x = CoordinateType::checked_add(self.x, rhs.x).unwrap_or_else(panic_if_out_of_bounds);
+        let y = CoordinateType::checked_add(self.y, rhs.y).unwrap_or_else(panic_if_out_of_bounds);
+        let z = CoordinateType::checked_add(self.z, rhs.z).unwrap_or_else(panic_if_out_of_bounds);
+        Self::new(x, y, z)
     }
 }
 
 impl std::ops::AddAssign for Coordinate {
     fn add_assign(&mut self, rhs: Self) {
-        self.x += rhs.x;
-        self.y += rhs.y;
-        self.z += rhs.z;
+        *self = self.to_owned() + rhs;
     }
 }
 
@@ -179,6 +183,12 @@ mod tests {
         result += Coordinate::new(-5, 10, 23);
         let expected = Coordinate::new(5, 25, 53);
         assert_eq!(result, expected);
+    }
+
+    #[test]
+    #[should_panic]
+    fn add_overflow() {
+        let _ = Coordinate::MAX + Coordinate::splat(1);
     }
 
     quickcheck! {
