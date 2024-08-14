@@ -1,6 +1,3 @@
-use core::fmt;
-use std::ops::Add;
-
 /// `Coordinate`'s field type.
 ///
 /// i32: From −2,147,483,648 to 2,147,483,647.
@@ -66,8 +63,8 @@ impl Coordinate {
     }
 }
 
-impl fmt::Display for Coordinate {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+impl core::fmt::Display for Coordinate {
+    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
         write!(f, "Coordinate ({}, {}, {})", self.x, self.y, self.z)
     }
 }
@@ -82,7 +79,7 @@ impl quickcheck::Arbitrary for Coordinate {
     }
 }
 
-impl Add for Coordinate {
+impl std::ops::Add for Coordinate {
     type Output = Self;
 
     fn add(self, rhs: Self) -> Self::Output {
@@ -91,6 +88,14 @@ impl Add for Coordinate {
             self.y + rhs.y,
             self.z + rhs.z,
         )
+    }
+}
+
+impl std::ops::AddAssign for Coordinate {
+    fn add_assign(&mut self, rhs: Self) {
+        self.x += rhs.x;
+        self.y += rhs.y;
+        self.z += rhs.z;
     }
 }
 
@@ -154,6 +159,14 @@ mod tests {
     fn add() {
         let result = Coordinate::new(1, 2, 3) + Coordinate::new(5, 0, 10);
         let expected = Coordinate::new(6, 2, 13);
+        assert_eq!(result, expected);
+    }
+
+    #[test]
+    fn add_assign() {
+        let mut result = Coordinate::new(10, 15, 30);
+        result += Coordinate::new(-5, 10, 23);
+        let expected = Coordinate::new(5, 25, 53);
         assert_eq!(result, expected);
     }
 }
