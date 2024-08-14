@@ -58,6 +58,25 @@ impl MulAssign for Coordinate {
     }
 }
 
+impl Div for Coordinate {
+    type Output = Self;
+
+    fn div(self, rhs: Self) -> Self::Output {
+        use crate::CoordinateOutOfBoundsError;
+        let panic_if_out_of_bounds = || panic!("{}", CoordinateOutOfBoundsError(self.to_owned()));
+        let x = CoordinateType::checked_div(self.x, rhs.x).unwrap_or_else(panic_if_out_of_bounds);
+        let y = CoordinateType::checked_div(self.y, rhs.y).unwrap_or_else(panic_if_out_of_bounds);
+        let z = CoordinateType::checked_div(self.z, rhs.z).unwrap_or_else(panic_if_out_of_bounds);
+        Self::new(x, y, z)
+    }
+}
+
+impl DivAssign for Coordinate {
+    fn div_assign(&mut self, rhs: Self) {
+        *self = self.to_owned() / rhs;
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -106,7 +125,7 @@ mod tests {
 
     #[test]
     fn mul() {
-        let result = Coordinate::new(1, 2, 4) * Coordinate::new(5, 0, 2);
+        let result = Coordinate::new(5, 2, 4) * Coordinate::new(1, 0, 2);
         let expected = Coordinate::new(5, 0, 8);
         assert_eq!(result, expected);
     }
@@ -123,5 +142,26 @@ mod tests {
     #[should_panic]
     fn mul_overflow() {
         let _ = Coordinate::MAX * Coordinate::splat(2);
+    }
+
+    #[test]
+    fn div() {
+        let result = Coordinate::new(5, 2, 4) / Coordinate::new(1, 2, 2);
+        let expected = Coordinate::new(5, 1, 2);
+        assert_eq!(result, expected);
+    }
+
+    #[test]
+    fn div_assign() {
+        let mut result = Coordinate::new(5, 360, 24);
+        result /= Coordinate::new(-5, 2, 4);
+        let expected = Coordinate::new(-1, 180, 6);
+        assert_eq!(result, expected);
+    }
+
+    #[test]
+    #[should_panic]
+    fn div_by_zero() {
+        let _ = Coordinate::MAX / Coordinate::splat(0);
     }
 }
