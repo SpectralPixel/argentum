@@ -36,6 +36,10 @@ pub struct Region {
 }
 
 impl Region {
+    /// Creates a new Region
+    /// 
+    /// - `position` corresponds to the starting position of the iterator.
+    /// - `size` detemines the range of the iterator. The range is exclusive.
     pub fn new(position: Coordinate, size: CoordinateType) -> Self {
         Self {
             position,
