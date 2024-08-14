@@ -81,7 +81,7 @@ impl Coordinate {
 
 impl core::fmt::Display for Coordinate {
     fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
-        write!(f, "Coordinate ({}, {}, {})", self.x, self.y, self.z)
+        write!(f, "({}, {}, {})", self.x, self.y, self.z)
     }
 }
 

@@ -6,7 +6,9 @@
 //! For more information about Argentum, see the `argentum_game` crate.
 
 mod coordinate;
+mod errors;
 mod region;
 
 pub use coordinate::{Coordinate, CoordinateType};
+pub use errors::CoordinateOutOfBoundsError;
 pub use region::Region;
