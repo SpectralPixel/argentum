@@ -85,6 +85,24 @@ impl Neg for Coordinate {
     }
 }
 
+impl BitAnd for Coordinate {
+    type Output = Self;
+
+    fn bitand(self, rhs: Self) -> Self::Output {
+        Self::new(
+            self.x & rhs.x,
+            self.y & rhs.y,
+            self.z & rhs.z,
+        )
+    }
+}
+
+impl BitAndAssign for Coordinate {
+    fn bitand_assign(&mut self, rhs: Self) {
+        *self = self.to_owned() & rhs;
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -178,5 +196,39 @@ mod tests {
         let result = -Coordinate::splat(7);
         let expected = Coordinate::splat(-7);
         assert_eq!(result, expected);
+    }
+
+    #[test]
+    fn and() {
+        let coord_a = Coordinate::new(
+            0b10101010,
+            0b00001111,
+            0b10101100,
+        );
+        let coord_b = Coordinate::splat(0b11001100);
+        let result = coord_a & coord_b;
+        let expected = Coordinate::new(
+            0b10001000,
+            0b00001100,
+            0b10001100,
+        );
+        assert_eq!(result, expected);
+    }
+
+    #[test]
+    fn and_assign() {
+        let mut coord_a = Coordinate::new(
+            0b10101010,
+            0b00001111,
+            0b10101100,
+        );
+        let coord_b = Coordinate::splat(0b11001100);
+        coord_a &= coord_b;
+        let expected = Coordinate::new(
+            0b10001000,
+            0b00001100,
+            0b10001100,
+        );
+        assert_eq!(coord_a, expected);
     }
 }
