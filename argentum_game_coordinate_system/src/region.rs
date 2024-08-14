@@ -5,6 +5,7 @@ pub struct Region {
     position: Coordinate,
     size: CoordinateType,
     offset: Coordinate,
+    first_iteration: bool,
 }
 
 impl Region {
@@ -13,6 +14,7 @@ impl Region {
             position,
             size,
             offset: Coordinate::new(0, 0, 0),
+            first_iteration: true,
         }
     }
 }
@@ -21,6 +23,11 @@ impl Iterator for Region {
     type Item = Coordinate;
 
     fn next(&mut self) -> Option<Self::Item> {
+        if self.first_iteration {
+            self.first_iteration = false;
+            return Some(self.position.to_owned())
+        }
+
         fn increment(n: &mut CoordinateType, size: CoordinateType) -> bool {
             *n = (*n + 1) % size;
             *n == 0
@@ -52,7 +59,7 @@ mod tests {
     quickcheck! {
         fn new_region(position: Coordinate, size: CoordinateType) -> bool {
             let result = Region::new(position.clone(), size);
-            let expected = Region { position, size, offset: Coordinate::new(0,0,0), };
+            let expected = Region { position, size, offset: Coordinate::new(0, 0, 0), first_iteration: true };
             result == expected
         }
     }
