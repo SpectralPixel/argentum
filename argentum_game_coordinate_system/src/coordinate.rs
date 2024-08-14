@@ -62,7 +62,6 @@ impl Coordinate {
         Self { x, y, z }
     }
 
-
     /// Creates a new coordinate, assigning all values to the input.
     ///
     /// # Examples
@@ -99,11 +98,7 @@ impl std::ops::Add for Coordinate {
     type Output = Self;
 
     fn add(self, rhs: Self) -> Self::Output {
-        Self::new(
-            self.x + rhs.x,
-            self.y + rhs.y,
-            self.z + rhs.z,
-        )
+        Self::new(self.x + rhs.x, self.y + rhs.y, self.z + rhs.z)
     }
 }
 
