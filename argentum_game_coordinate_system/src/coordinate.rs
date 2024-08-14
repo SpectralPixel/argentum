@@ -71,6 +71,16 @@ impl fmt::Display for Coordinate {
     }
 }
 
+impl quickcheck::Arbitrary for Coordinate {
+    fn arbitrary(g: &mut quickcheck::Gen) -> Self {
+        Self::new(
+            CoordinateType::arbitrary(g),
+            CoordinateType::arbitrary(g),
+            CoordinateType::arbitrary(g),
+        )
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use quickcheck::quickcheck;
@@ -78,10 +88,19 @@ mod tests {
     use super::*;
 
     quickcheck! {
-        fn new_position(x: CoordinateType, y: CoordinateType, z: CoordinateType) -> bool {
+        fn new(x: CoordinateType, y: CoordinateType, z: CoordinateType) -> bool {
             let result = Coordinate::new(x, y, z);
             let expected = Coordinate { x, y, z };
             result == expected
+        }
+    }
+
+    quickcheck! {
+        fn arbitrary(coord: Coordinate) -> bool {
+            let x_fine = coord.x >= Coordinate::MIN.x && coord.x <= Coordinate::MAX.x;
+            let y_fine = coord.y >= Coordinate::MIN.y && coord.y <= Coordinate::MAX.y;
+            let z_fine = coord.z >= Coordinate::MIN.z && coord.z <= Coordinate::MAX.z;
+            x_fine && y_fine && z_fine
         }
     }
 
