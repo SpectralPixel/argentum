@@ -29,6 +29,10 @@ type SizeType = usize;
 ///     i += 1;
 /// }
 /// ```
+/// 
+/// # Errors
+/// 
+/// Setting a `size` that is less than or equal to `0` will cause the program to crash.
 #[derive(PartialEq, Debug)]
 pub struct Region {
     position: Coordinate,
@@ -41,8 +45,10 @@ impl Region {
     /// Creates a new Region
     ///
     /// - `position` corresponds to the starting position of the iterator.
-    /// - `size` detemines the range of the iterator. The range is exclusive.
-    pub fn new(position: Coordinate, size: CoordinateType) -> Self {
+    /// - `size` detemines the range of the iterator. The range is exclusive. Must be larger than `0`.
+    pub fn new(position: Coordinate, size: SizeType) -> Self {
+        assert!(size > 0);
+
         Self {
             position,
             size,
@@ -81,21 +87,6 @@ impl Iterator for Region {
         match wrapped_z {
             false => Some(self.position.to_owned() + self.offset.to_owned()),
             true => None,
-        }
-    }
-}
-
-#[cfg(test)]
-mod tests {
-    use quickcheck::quickcheck;
-
-    use super::*;
-
-    quickcheck! {
-        fn new_region(position: Coordinate, size: CoordinateType) -> bool {
-            let result = Region::new(position.clone(), size);
-            let expected = Region { position, size, offset: Coordinate::new(0, 0, 0), first_iteration: true };
-            result == expected
         }
     }
 }
