@@ -98,5 +98,130 @@ macro_rules! coordinate_type {
                 )
             }
         }
+
+        use crate::errors::CoordinateOverflowError;
+        use std::ops::*;
+
+        impl Add for $name {
+            type Output = Self;
+
+            fn add(self, rhs: Self) -> Self::Output {
+                let panic_if_out_of_bounds = || panic!("{}", CoordinateOverflowError(self.to_owned()));
+                let x = $coord_type::checked_add(self.x, rhs.x).unwrap_or_else(panic_if_out_of_bounds);
+                let y = $coord_type::checked_add(self.y, rhs.y).unwrap_or_else(panic_if_out_of_bounds);
+                let z = $coord_type::checked_add(self.z, rhs.z).unwrap_or_else(panic_if_out_of_bounds);
+                Self::new(x, y, z)
+            }
+        }
+
+        impl AddAssign for $name {
+            fn add_assign(&mut self, rhs: Self) {
+                *self = self.to_owned() + rhs;
+            }
+        }
+
+        impl Sub for $name {
+            type Output = Self;
+
+            fn sub(self, rhs: Self) -> Self::Output {
+                let panic_if_out_of_bounds = || panic!("{}", CoordinateOverflowError(self.to_owned()));
+                let x = $coord_type::checked_sub(self.x, rhs.x).unwrap_or_else(panic_if_out_of_bounds);
+                let y = $coord_type::checked_sub(self.y, rhs.y).unwrap_or_else(panic_if_out_of_bounds);
+                let z = $coord_type::checked_sub(self.z, rhs.z).unwrap_or_else(panic_if_out_of_bounds);
+                Self::new(x, y, z)
+            }
+        }
+
+        impl SubAssign for $name {
+            fn sub_assign(&mut self, rhs: Self) {
+                *self = self.to_owned() - rhs;
+            }
+        }
+
+        impl Mul for $name {
+            type Output = Self;
+
+            fn mul(self, rhs: Self) -> Self::Output {
+                let panic_if_out_of_bounds = || panic!("{}", CoordinateOverflowError(self.to_owned()));
+                let x = $coord_type::checked_mul(self.x, rhs.x).unwrap_or_else(panic_if_out_of_bounds);
+                let y = $coord_type::checked_mul(self.y, rhs.y).unwrap_or_else(panic_if_out_of_bounds);
+                let z = $coord_type::checked_mul(self.z, rhs.z).unwrap_or_else(panic_if_out_of_bounds);
+                Self::new(x, y, z)
+            }
+        }
+
+        impl MulAssign for $name {
+            fn mul_assign(&mut self, rhs: Self) {
+                *self = self.to_owned() * rhs;
+            }
+        }
+
+        impl Div for $name {
+            type Output = Self;
+
+            fn div(self, rhs: Self) -> Self::Output {
+                let panic_if_out_of_bounds = || panic!("{}", CoordinateOverflowError(self.to_owned()));
+                let x = $coord_type::checked_div(self.x, rhs.x).unwrap_or_else(panic_if_out_of_bounds);
+                let y = $coord_type::checked_div(self.y, rhs.y).unwrap_or_else(panic_if_out_of_bounds);
+                let z = $coord_type::checked_div(self.z, rhs.z).unwrap_or_else(panic_if_out_of_bounds);
+                Self::new(x, y, z)
+            }
+        }
+
+        impl DivAssign for $name {
+            fn div_assign(&mut self, rhs: Self) {
+                *self = self.to_owned() / rhs;
+            }
+        }
+
+        impl Neg for $name {
+            type Output = Self;
+
+            fn neg(self) -> Self::Output {
+                Self::new(-self.x, -self.y, -self.z)
+            }
+        }
+
+        impl BitAnd for $name {
+            type Output = Self;
+
+            fn bitand(self, rhs: Self) -> Self::Output {
+                Self::new(self.x & rhs.x, self.y & rhs.y, self.z & rhs.z)
+            }
+        }
+
+        impl BitAndAssign for $name {
+            fn bitand_assign(&mut self, rhs: Self) {
+                *self = self.to_owned() & rhs;
+            }
+        }
+
+        impl BitOr for $name {
+            type Output = Self;
+
+            fn bitor(self, rhs: Self) -> Self::Output {
+                Self::new(self.x | rhs.x, self.y | rhs.y, self.z | rhs.z)
+            }
+        }
+
+        impl BitOrAssign for $name {
+            fn bitor_assign(&mut self, rhs: Self) {
+                *self = self.to_owned() | rhs;
+            }
+        }
+
+        impl BitXor for $name {
+            type Output = Self;
+
+            fn bitxor(self, rhs: Self) -> Self::Output {
+                Self::new(self.x ^ rhs.x, self.y ^ rhs.y, self.z ^ rhs.z)
+            }
+        }
+
+        impl BitXorAssign for $name {
+            fn bitxor_assign(&mut self, rhs: Self) {
+                *self = self.to_owned() ^ rhs;
+            }
+        }
     };
 }
