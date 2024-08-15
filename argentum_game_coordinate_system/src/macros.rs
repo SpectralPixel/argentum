@@ -99,7 +99,11 @@ macro_rules! coordinate_type {
             }
         }
 
-        use crate::errors::CoordinateOverflowError;
+        use thiserror::Error;
+        #[derive(Debug, Clone, Error)]
+        #[error("{0} is experiencing integer overflow.")]
+        pub struct CoordinateOverflowError(pub $name);
+
         use std::ops::*;
 
         impl Add for $name {
