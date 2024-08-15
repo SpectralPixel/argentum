@@ -1,5 +1,7 @@
 mod arithmetic;
 
+use crate::coordinate_type;
+
 /// `Coordinate`'s field type.
 ///
 /// i32: From −2,147,483,648 to 2,147,483,647.
@@ -8,13 +10,7 @@ mod arithmetic;
 /// would double. Heck, even this is already overkill.
 pub type CoordinateType = i32;
 
-/// 3D Coordinate in absolute space.
-#[derive(PartialEq, Debug, Clone)]
-pub struct Coordinate {
-    pub x: CoordinateType,
-    pub y: CoordinateType,
-    pub z: CoordinateType,
-}
+coordinate_type!(Coordinate, CoordinateType, "3D Coordinate in absolute space.");
 
 impl Coordinate {
     /// Represents the smallest possible coordinate on all axes.
