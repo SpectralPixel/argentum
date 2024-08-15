@@ -1,5 +1,5 @@
 #[macro_export]
-macro_rules! coordinate_type {
+macro_rules! generate_coordinate_type {
     ($name:ident, $coord_type:ident, $type_documentation:literal, $crate_name:expr) => {
         #[doc=$type_documentation]
         #[derive(PartialEq, Debug, Clone)]

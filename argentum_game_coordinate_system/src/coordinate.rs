@@ -1,4 +1,4 @@
-use crate::coordinate_type;
+use crate::generate_coordinate_type;
 
 /// `Coordinate`'s field type.
 ///
@@ -8,7 +8,7 @@ use crate::coordinate_type;
 /// would double. Heck, even this is already overkill.
 pub type CoordinateType = i32;
 
-coordinate_type!(
+generate_coordinate_type!(
     Coordinate,
     CoordinateType,
     "3D Coordinate in absolute space.",
