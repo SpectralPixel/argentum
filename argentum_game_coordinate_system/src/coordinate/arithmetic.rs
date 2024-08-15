@@ -1,11 +1,11 @@
-use crate::{errors::CoordinateOutOfBoundsError, Coordinate, CoordinateType};
+use crate::{errors::CoordinateOverflowError, Coordinate, CoordinateType};
 use std::ops::*;
 
 impl Add for Coordinate {
     type Output = Self;
 
     fn add(self, rhs: Self) -> Self::Output {
-        let panic_if_out_of_bounds = || panic!("{}", CoordinateOutOfBoundsError(self.to_owned()));
+        let panic_if_out_of_bounds = || panic!("{}", CoordinateOverflowError(self.to_owned()));
         let x = CoordinateType::checked_add(self.x, rhs.x).unwrap_or_else(panic_if_out_of_bounds);
         let y = CoordinateType::checked_add(self.y, rhs.y).unwrap_or_else(panic_if_out_of_bounds);
         let z = CoordinateType::checked_add(self.z, rhs.z).unwrap_or_else(panic_if_out_of_bounds);
@@ -23,7 +23,7 @@ impl Sub for Coordinate {
     type Output = Self;
 
     fn sub(self, rhs: Self) -> Self::Output {
-        let panic_if_out_of_bounds = || panic!("{}", CoordinateOutOfBoundsError(self.to_owned()));
+        let panic_if_out_of_bounds = || panic!("{}", CoordinateOverflowError(self.to_owned()));
         let x = CoordinateType::checked_sub(self.x, rhs.x).unwrap_or_else(panic_if_out_of_bounds);
         let y = CoordinateType::checked_sub(self.y, rhs.y).unwrap_or_else(panic_if_out_of_bounds);
         let z = CoordinateType::checked_sub(self.z, rhs.z).unwrap_or_else(panic_if_out_of_bounds);
@@ -41,7 +41,7 @@ impl Mul for Coordinate {
     type Output = Self;
 
     fn mul(self, rhs: Self) -> Self::Output {
-        let panic_if_out_of_bounds = || panic!("{}", CoordinateOutOfBoundsError(self.to_owned()));
+        let panic_if_out_of_bounds = || panic!("{}", CoordinateOverflowError(self.to_owned()));
         let x = CoordinateType::checked_mul(self.x, rhs.x).unwrap_or_else(panic_if_out_of_bounds);
         let y = CoordinateType::checked_mul(self.y, rhs.y).unwrap_or_else(panic_if_out_of_bounds);
         let z = CoordinateType::checked_mul(self.z, rhs.z).unwrap_or_else(panic_if_out_of_bounds);
@@ -59,7 +59,7 @@ impl Div for Coordinate {
     type Output = Self;
 
     fn div(self, rhs: Self) -> Self::Output {
-        let panic_if_out_of_bounds = || panic!("{}", CoordinateOutOfBoundsError(self.to_owned()));
+        let panic_if_out_of_bounds = || panic!("{}", CoordinateOverflowError(self.to_owned()));
         let x = CoordinateType::checked_div(self.x, rhs.x).unwrap_or_else(panic_if_out_of_bounds);
         let y = CoordinateType::checked_div(self.y, rhs.y).unwrap_or_else(panic_if_out_of_bounds);
         let z = CoordinateType::checked_div(self.z, rhs.z).unwrap_or_else(panic_if_out_of_bounds);
