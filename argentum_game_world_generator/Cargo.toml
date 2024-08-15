@@ -6,4 +6,5 @@ description = "Argentum: World Generator"
 license = "AGPL-3.0-or-later"
 
 [dependencies]
+ndarray = "0.16.1"
 quickcheck = { version = "1.0.3", default-features = false }
