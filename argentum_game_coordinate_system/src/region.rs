@@ -1,5 +1,7 @@
 use crate::{Coordinate, CoordinateType};
 
+type SizeType = usize;
+
 /// Cube-shaped iterator of `Coordinate`s
 ///
 /// The iterator returns all `Coordinate`s from `position` to `position + size - 1`
@@ -30,7 +32,7 @@ use crate::{Coordinate, CoordinateType};
 #[derive(PartialEq, Debug)]
 pub struct Region {
     position: Coordinate,
-    size: CoordinateType,
+    size: SizeType,
     offset: Coordinate,
     first_iteration: bool,
 }
@@ -59,20 +61,22 @@ impl Iterator for Region {
             return Some(self.position.to_owned());
         }
 
+        let size = self.size() as CoordinateType;
+
         fn increment(n: &mut CoordinateType, size: CoordinateType) -> bool {
             *n = (*n + 1) % size;
             *n == 0
         }
 
-        let wrapped_x = increment(&mut self.offset.x, self.size);
+        let wrapped_x = increment(&mut self.offset.x, size);
         let mut wrapped_y = false;
         let mut wrapped_z = false;
 
         if wrapped_x {
-            wrapped_y = increment(&mut self.offset.y, self.size);
+            wrapped_y = increment(&mut self.offset.y, size);
         }
         if wrapped_y {
-            wrapped_z = increment(&mut self.offset.z, self.size);
+            wrapped_z = increment(&mut self.offset.z, size);
         }
         match wrapped_z {
             false => Some(self.position.to_owned() + self.offset.to_owned()),
