@@ -7,3 +7,4 @@ license = "AGPL-3.0-or-later"
 
 [dependencies]
 quickcheck = { version = "1.0.3", default-features = false }
+thiserror = "1.0.63"

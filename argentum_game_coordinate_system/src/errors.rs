@@ -1,18 +1,7 @@
-use std::{error::Error, fmt};
+use thiserror::Error;
 
 use crate::Coordinate;
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Error)]
+#[error("Coordinate {0} is out of bounds! (integer overflow)")]
 pub struct CoordinateOutOfBoundsError(pub Coordinate);
-
-impl fmt::Display for CoordinateOutOfBoundsError {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(
-            f,
-            "Coordinate {} is out of bounds! (integer overflow)",
-            self.0
-        )
-    }
-}
-
-impl Error for CoordinateOutOfBoundsError {}
