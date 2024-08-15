@@ -17,16 +17,6 @@ coordinate_type!(
     argentum_game_coordinate_system
 );
 
-impl quickcheck::Arbitrary for Coordinate {
-    fn arbitrary(g: &mut quickcheck::Gen) -> Self {
-        Self::new(
-            CoordinateType::arbitrary(g),
-            CoordinateType::arbitrary(g),
-            CoordinateType::arbitrary(g),
-        )
-    }
-}
-
 #[cfg(test)]
 mod tests {
     use quickcheck::quickcheck;

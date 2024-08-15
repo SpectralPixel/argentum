@@ -87,5 +87,16 @@ macro_rules! coordinate_type {
                 write!(f, "({}, {}, {})", self.x, self.y, self.z)
             }
         }
+
+        use quickcheck::{Arbitrary, Gen};
+        impl Arbitrary for $name {
+            fn arbitrary(g: &mut Gen) -> Self {
+                Self::new(
+                    $coord_type::arbitrary(g),
+                    $coord_type::arbitrary(g),
+                    $coord_type::arbitrary(g),
+                )
+            }
+        }
     };
 }
