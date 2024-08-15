@@ -56,6 +56,11 @@ impl Region {
             first_iteration: true,
         }
     }
+
+    /// Returns the `Region`'s size.
+    pub fn size(&self) -> SizeType {
+        self.size
+    }
 }
 
 impl Iterator for Region {
