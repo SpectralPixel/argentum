@@ -29,9 +29,9 @@ type SizeType = usize;
 ///     i += 1;
 /// }
 /// ```
-/// 
+///
 /// # Errors
-/// 
+///
 /// Setting a `size` that is less than or equal to `0` will cause the program to crash.
 #[derive(PartialEq, Debug)]
 pub struct Region {

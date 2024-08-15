@@ -7,6 +7,7 @@
 
 mod coordinate;
 mod errors;
+mod macros;
 mod region;
 
 pub use coordinate::{Coordinate, CoordinateType};
