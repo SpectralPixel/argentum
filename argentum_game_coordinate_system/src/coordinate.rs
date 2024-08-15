@@ -10,71 +10,12 @@ use crate::coordinate_type;
 /// would double. Heck, even this is already overkill.
 pub type CoordinateType = i32;
 
-coordinate_type!(Coordinate, CoordinateType, "3D Coordinate in absolute space.");
-
-impl Coordinate {
-    /// Represents the smallest possible coordinate on all axes.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use argentum_game_coordinate_system::{CoordinateType, Coordinate};
-    /// assert_eq!(Coordinate::MIN.x, CoordinateType::MIN);
-    /// assert_eq!(Coordinate::MIN.y, CoordinateType::MIN);
-    /// assert_eq!(Coordinate::MIN.z, CoordinateType::MIN);
-    /// ```
-    pub const MIN: Self = Self {
-        x: CoordinateType::MIN,
-        y: CoordinateType::MIN,
-        z: CoordinateType::MIN,
-    };
-
-    /// Represents the largest possible coordinate on all axes.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use argentum_game_coordinate_system::{CoordinateType, Coordinate};
-    /// assert_eq!(Coordinate::MAX.x, CoordinateType::MAX);
-    /// assert_eq!(Coordinate::MAX.y, CoordinateType::MAX);
-    /// assert_eq!(Coordinate::MAX.z, CoordinateType::MAX);
-    /// ```
-    pub const MAX: Self = Self {
-        x: CoordinateType::MAX,
-        y: CoordinateType::MAX,
-        z: CoordinateType::MAX,
-    };
-
-    /// Creates a new Coordinate
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use argentum_game_coordinate_system::Coordinate;
-    /// let pos = Coordinate::new(1, 2, 3);
-    /// assert_eq!(pos.x, 1);
-    /// assert_eq!(pos.y, 2);
-    /// assert_eq!(pos.z, 3);
-    /// ```
-    pub fn new(x: CoordinateType, y: CoordinateType, z: CoordinateType) -> Self {
-        Self { x, y, z }
-    }
-
-    /// Creates a new coordinate, assigning all values to the input.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use argentum_game_coordinate_system::Coordinate;
-    /// let pos = Coordinate::splat(7);
-    /// assert_eq!(pos.x, 7);
-    /// assert_eq!(pos.y, 7);
-    /// assert_eq!(pos.z, 7);
-    /// ```
-    pub fn splat(n: CoordinateType) -> Self {
-        Self::new(n, n, n)
-    }
-}
+coordinate_type!(
+    Coordinate,
+    CoordinateType,
+    "3D Coordinate in absolute space.",
+    argentum_game_coordinate_system
+);
 
 impl core::fmt::Display for Coordinate {
     fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
