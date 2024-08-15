@@ -17,12 +17,6 @@ coordinate_type!(
     argentum_game_coordinate_system
 );
 
-impl core::fmt::Display for Coordinate {
-    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
-        write!(f, "({}, {}, {})", self.x, self.y, self.z)
-    }
-}
-
 impl quickcheck::Arbitrary for Coordinate {
     fn arbitrary(g: &mut quickcheck::Gen) -> Self {
         Self::new(

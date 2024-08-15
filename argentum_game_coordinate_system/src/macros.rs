@@ -80,5 +80,12 @@ macro_rules! coordinate_type {
                 Self::new(n, n, n)
             }
         }
+
+        use core::fmt::{Display, Formatter, Result};
+        impl Display for $name {
+            fn fmt(&self, f: &mut Formatter<'_>) -> Result {
+                write!(f, "({}, {}, {})", self.x, self.y, self.z)
+            }
+        }
     };
 }
