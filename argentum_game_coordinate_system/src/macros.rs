@@ -29,7 +29,7 @@ macro_rules! generate_coordinate_type {
             pub z: $coord_type,
         }
 
-        impl Coordinate {
+        impl $name {
             #[doc=concat!("
                 Represents the smallest possible coordinate on all axes.
 
