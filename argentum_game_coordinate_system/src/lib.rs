@@ -7,7 +7,7 @@
 
 mod coordinate;
 mod macros;
-mod region;
+pub mod region;
 
 pub use coordinate::{Coordinate, CoordinateType};
 pub use region::Region;
