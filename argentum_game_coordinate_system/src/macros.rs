@@ -31,7 +31,7 @@ macro_rules! generate_coordinate_type {
 
         impl $name {
             #[doc=concat!("
-                Represents the smallest possible coordinate on all axes.
+                Represents the smallest possible `", stringify!($name), "` on all axes.
 
                 # Examples
 
@@ -49,7 +49,7 @@ macro_rules! generate_coordinate_type {
             };
 
             #[doc=concat!("
-                Represents the smallest possible coordinate on all axes.
+                Represents the smallest possible `", stringify!($name), "` on all axes.
 
                 # Examples
 
@@ -67,7 +67,7 @@ macro_rules! generate_coordinate_type {
             };
 
             #[doc=concat!("
-                Creates a new Coordinate.
+                Creates a new `", stringify!($name), "`.
 
                 # Examples
 
@@ -84,7 +84,7 @@ macro_rules! generate_coordinate_type {
             }
 
             #[doc=concat!("
-                Creates a new coordinate, assigning all values to the input.
+                Creates a new `", stringify!($name), "`, assigning all values to the input.
 
                 # Examples
 
