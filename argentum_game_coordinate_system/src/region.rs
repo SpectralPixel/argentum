@@ -2,7 +2,8 @@ use std::num::NonZeroU16;
 
 use crate::{Coordinate, CoordinateType};
 
-type SizeType = NonZeroU16;
+/// `Region`'s size type.
+pub type SizeType = NonZeroU16;
 
 /// Cube-shaped iterator of `Coordinate`s
 ///
