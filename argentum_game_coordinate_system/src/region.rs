@@ -1,6 +1,8 @@
+use std::num::NonZeroU16;
+
 use crate::{Coordinate, CoordinateType};
 
-type SizeType = usize;
+type SizeType = NonZeroU16;
 
 /// Cube-shaped iterator of `Coordinate`s
 ///
@@ -9,6 +11,11 @@ type SizeType = usize;
 /// # Examples
 ///
 /// ```
+/// # fn main() {
+/// #     test().unwrap();
+/// # }
+/// # fn test() -> Option<()> {
+/// use std::num::NonZeroU16;
 /// use argentum_game_coordinate_system::{Coordinate, Region};
 ///
 /// let mut positions: Vec<Coordinate> = Vec::new();
@@ -22,12 +29,14 @@ type SizeType = usize;
 /// positions.push(Coordinate::new(8, 8, 8));
 ///
 /// let mut i = 0;
-/// let region = Region::new(Coordinate::splat(7), 2);
+/// let region = Region::new(Coordinate::splat(7), NonZeroU16::new(2)?);
 /// for pos in region {
 ///     println!("{i}");
 ///     assert_eq!(pos, positions[i]);
 ///     i += 1;
 /// }
+/// # Some(())
+/// # }
 /// ```
 ///
 /// # Errors
@@ -47,11 +56,9 @@ impl Region {
     /// - `position` corresponds to the starting position of the iterator.
     /// - `size` detemines the range of the iterator. The range is exclusive. Must be larger than `0`.
     pub fn new(position: Coordinate, size: SizeType) -> Self {
-        assert!(size > 0);
-
         Self {
             position,
-            size,
+            size: SizeType::from(size),
             offset: Coordinate::new(0, 0, 0),
             first_iteration: true,
         }
@@ -72,7 +79,7 @@ impl Iterator for Region {
             return Some(self.position.to_owned());
         }
 
-        let size = self.size() as CoordinateType;
+        let size = CoordinateType::try_from(u16::from(self.size())).unwrap();
 
         fn increment(n: &mut CoordinateType, size: CoordinateType) -> bool {
             *n = (*n + 1) % size;
@@ -92,6 +99,26 @@ impl Iterator for Region {
         match wrapped_z {
             false => Some(self.position.to_owned() + self.offset.to_owned()),
             true => None,
+        }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use quickcheck::quickcheck;
+
+    use super::*;
+
+    quickcheck! {
+        fn new(pos: Coordinate, size: NonZeroU16) -> bool {
+            let result =  Region::new(pos.clone(), size);
+            let expected = Region {
+                position: pos,
+                size,
+                offset: Coordinate::new(0, 0, 0),
+                first_iteration: true,
+            };
+            result == expected
         }
     }
 }
