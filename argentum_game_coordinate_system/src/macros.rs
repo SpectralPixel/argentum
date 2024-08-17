@@ -1,3 +1,23 @@
+/// Allows you to generate a new type similar to `Coordinate`.
+/// 
+/// # Inputs
+/// 
+/// - `$name` = The name of the new type.
+/// - `$coord_type` = The type used for the fields `x`, `y` and `z`. Must be a numeric type provided by Rust.
+/// - `$type_documentation` = A string literal that will be used for documenting your type.
+/// - `$crate_name` = A workaround for not being allowed to `stringify!` the `$crate` variable within the macro for whatever reason. Provide the name of your crate in plain text, and don't enclose it in quotes. If you know how to fix this issue, feel free to open a PR.
+/// 
+/// # Example
+/// 
+/// ```
+/// type CoordinateType = i32;
+/// generate_coordinate_type!(
+///     Coordinate,
+///     CoordinateType,
+///     "3D Coordinate in absolute space.",
+///     argentum_game_coordinate_system
+/// );
+/// ```
 #[macro_export]
 macro_rules! generate_coordinate_type {
     ($name:ident, $coord_type:ident, $type_documentation:literal, $crate_name:expr) => {
