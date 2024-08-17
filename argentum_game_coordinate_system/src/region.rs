@@ -1,9 +1,9 @@
-use std::num::NonZeroU16;
+use std::num::NonZero;
 
 use crate::{Coordinate, CoordinateType};
 
 /// `Region`'s size type.
-pub type SizeType = NonZeroU16;
+pub type SizeType = u16;
 
 /// Cube-shaped iterator of `Coordinate`s
 ///
@@ -56,7 +56,7 @@ impl Region {
     ///
     /// - `position` corresponds to the starting position of the iterator.
     /// - `size` detemines the range of the iterator. The range is exclusive. Must be larger than `0`.
-    pub fn new(position: Coordinate, size: SizeType) -> Self {
+    pub fn new(position: Coordinate, size: NonZero<SizeType>) -> Self {
         Self {
             position,
             size: SizeType::from(size),
@@ -80,7 +80,7 @@ impl Iterator for Region {
             return Some(self.position.to_owned());
         }
 
-        let size = CoordinateType::try_from(u16::from(self.size())).unwrap();
+        let size = CoordinateType::try_from(self.size()).unwrap_or_default();
 
         fn increment(n: &mut CoordinateType, size: CoordinateType) -> bool {
             *n = (*n + 1) % size;
@@ -111,11 +111,11 @@ mod tests {
     use super::*;
 
     quickcheck! {
-        fn new(pos: Coordinate, size: NonZeroU16) -> bool {
+        fn new(pos: Coordinate, size: NonZero<SizeType>) -> bool {
             let result =  Region::new(pos.clone(), size);
             let expected = Region {
                 position: pos,
-                size,
+                size: size.get(),
                 offset: Coordinate::new(0, 0, 0),
                 first_iteration: true,
             };
@@ -126,7 +126,7 @@ mod tests {
     #[test]
     #[should_panic]
     fn zero_size() {
-        let region = Region::new(Coordinate::splat(0), NonZeroU16::new(0).unwrap());
+        let region = Region::new(Coordinate::splat(0), NonZero::<SizeType>::new(0).unwrap());
         
         let mut i = 0;
         for pos in region {
