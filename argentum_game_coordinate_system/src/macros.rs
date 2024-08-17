@@ -12,7 +12,7 @@
 /// ```
 /// use argentum_game_coordinate_system::generate_coordinate_type;
 /// type CoordinateType = i32;
-/// 
+///
 /// generate_coordinate_type!(
 ///     Coordinate,
 ///     CoordinateType,
