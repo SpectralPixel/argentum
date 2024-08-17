@@ -121,4 +121,17 @@ mod tests {
             result == expected
         }
     }
+
+    #[test]
+    #[should_panic]
+    fn zero_size() {
+        let region = Region::new(Coordinate::splat(0), NonZeroU16::new(0).unwrap());
+        
+        let mut i = 0;
+        for pos in region {
+            println!("{pos}");
+            i += 1;
+        }
+        assert!(i < 0, "Never even iterated!");
+    }
 }
