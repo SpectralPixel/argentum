@@ -3,7 +3,7 @@ use std::num::NonZero;
 use crate::{Coordinate, CoordinateType};
 
 /// `Region`'s size type.
-pub type SizeType = u16;
+pub type SizeType = u8;
 
 /// Cube-shaped iterator of `Coordinate`s
 ///
@@ -16,8 +16,8 @@ pub type SizeType = u16;
 /// #     test().unwrap();
 /// # }
 /// # fn test() -> Option<()> {
-/// use std::num::NonZeroU16;
-/// use argentum_game_coordinate_system::{Coordinate, Region};
+/// use std::num::NonZero;
+/// use argentum_game_coordinate_system::{Coordinate, Region, region::SizeType};
 ///
 /// let mut positions: Vec<Coordinate> = Vec::new();
 /// positions.push(Coordinate::new(7, 7, 7));
@@ -30,7 +30,7 @@ pub type SizeType = u16;
 /// positions.push(Coordinate::new(8, 8, 8));
 ///
 /// let mut i = 0;
-/// let region = Region::new(Coordinate::splat(7), NonZeroU16::new(2)?);
+/// let region = Region::new(Coordinate::splat(7), NonZero::<SizeType>::new(2)?);
 /// for pos in region {
 ///     println!("{i}");
 ///     assert_eq!(pos, positions[i]);
