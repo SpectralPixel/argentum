@@ -200,14 +200,6 @@ macro_rules! generate_coordinate_type {
             }
         }
 
-        impl Neg for $name {
-            type Output = Self;
-
-            fn neg(self) -> Self::Output {
-                Self::new(-self.x, -self.y, -self.z)
-            }
-        }
-
         impl BitAnd for $name {
             type Output = Self;
 
