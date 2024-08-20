@@ -1,8 +1,8 @@
 use crate::generate_coordinate_type;
 
-mod unsigned_coordinate;
-mod signed_coordinate;
 mod coordinate_trait;
+mod signed_coordinate;
+mod unsigned_coordinate;
 
 /// `Coordinate`'s field type.
 ///

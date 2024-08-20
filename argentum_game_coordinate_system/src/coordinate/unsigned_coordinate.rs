@@ -5,7 +5,7 @@ mod tests;
 
 pub struct UnsignedCoordinate<T>
 where
-    T: Num + Unsigned
+    T: Num + Unsigned,
 {
     pub x: T,
     pub y: T,
