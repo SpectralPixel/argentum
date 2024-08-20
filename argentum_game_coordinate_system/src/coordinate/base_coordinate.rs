@@ -1,9 +1,5 @@
 use crate::generate_coordinate_type;
 
-mod unsigned_coordinate;
-mod signed_coordinate;
-mod base_coordinate;
-
 /// `Coordinate`'s field type.
 ///
 /// i32: From −2,147,483,648 to 2,147,483,647.
