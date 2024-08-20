@@ -2,7 +2,7 @@ use crate::generate_coordinate_type;
 
 mod unsigned_coordinate;
 mod signed_coordinate;
-mod base_coordinate;
+mod coordinate_trait;
 
 /// `Coordinate`'s field type.
 ///
