@@ -3,7 +3,7 @@ use num::{Num, Unsigned};
 #[cfg(test)]
 mod tests;
 
-struct UnsignedCoordinate<T>
+pub struct UnsignedCoordinate<T>
 where
     T: Num + Unsigned
 {

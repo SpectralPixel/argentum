@@ -3,7 +3,7 @@ use num::{Num, Signed};
 #[cfg(test)]
 mod tests;
 
-struct SignedCoordinate<T>
+pub struct SignedCoordinate<T>
 where
     T: Num + Signed
 {
