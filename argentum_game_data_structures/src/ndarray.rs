@@ -1,6 +1,6 @@
 use std::num::NonZero;
 
-use argentum_game_coordinate_system::region::SizeType;
+use argentum_game_coordinate_system::{region::SizeType, Coordinate};
 use argentum_game_voxel::Voxel;
 use ndarray::{Array3, Ix3};
 
@@ -17,6 +17,10 @@ impl VoxelGrid {
             size,
             data: Array3::from_elem(Ix3(s, s, s), Voxel::default()),
         }
+    }
+
+    pub fn get(&self, pos: Coordinate) -> Option<Voxel> {
+        None
     }
 }
 
