@@ -1,4 +1,4 @@
-use argentum_game_coordinate_system_macros::Coordinate;
+use argentum_game_coordinate_system_macros::{Coordinate, CoordinateArithmetic};
 use num::{Integer, Signed};
 
 use super::coordinate_trait::CoordinateTrait;
@@ -6,7 +6,7 @@ use super::coordinate_trait::CoordinateTrait;
 #[cfg(test)]
 mod tests;
 
-#[derive(Coordinate)]
+#[derive(Coordinate, CoordinateArithmetic)]
 pub struct SignedCoordinate<T>
 where
     T: Integer + Signed + Copy,
