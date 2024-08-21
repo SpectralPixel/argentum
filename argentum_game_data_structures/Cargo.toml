@@ -6,7 +6,7 @@ description = "Argentum: Data Structures"
 license = "AGPL-3.0-or-later"
 
 [dependencies]
-argentum_game_voxel = "0.1.0"
-argentum_game_coordinate_system = "0.7.0"
+argentum_game_voxel = { path = "../argentum_game_voxel" }
+argentum_game_coordinate_system = { path = "../argentum_game_coordinate_system" }
 ndarray = "0.16.1"
 quickcheck = { version = "1.0.3", default-features = false }
