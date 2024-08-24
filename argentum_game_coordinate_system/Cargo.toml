@@ -7,6 +7,7 @@ license = "AGPL-3.0-or-later"
 
 [dependencies]
 argentum_game_coordinate_system_macros = { path = "../argentum_game_coordinate_system_macros" }
+min_max_traits = "0.1.0"
 num = "0.4.3"
 quickcheck = { version = "1.0.3", default-features = false }
 thiserror = "1.0.63"
