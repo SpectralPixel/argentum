@@ -6,7 +6,7 @@ use super::coordinate_trait::CoordinateTrait;
 #[cfg(test)]
 mod tests;
 
-#[derive(Coordinate, CoordinateArithmetic)]
+#[derive(Coordinate, CoordinateArithmetic, Clone, Debug, PartialEq)]
 #[signed]
 pub struct SignedCoordinate<T>
 where
