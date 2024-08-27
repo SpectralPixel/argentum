@@ -159,6 +159,13 @@ fn rem_assign() {
 }
 
 #[test]
+fn not() {
+    let result = !(UnsignedCoordinate::<usize>::MAX - UnsignedCoordinate::splat(5));
+    let expected = UnsignedCoordinate::MIN + UnsignedCoordinate::splat(5);
+    assert_eq!(result, expected);
+}
+
+#[test]
 fn bit_and() {
     let coord_a = UnsignedCoordinate::<usize>::new(0b10101010, 0b00001111, 0b10101100);
     let coord_b = UnsignedCoordinate::splat(0b11001100);

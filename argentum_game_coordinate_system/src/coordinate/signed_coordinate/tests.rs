@@ -166,6 +166,13 @@ fn neg() {
 }
 
 #[test]
+fn not() {
+    let result = !SignedCoordinate::<isize>::MAX;
+    let expected = SignedCoordinate::MIN;
+    assert_eq!(result, expected);
+}
+
+#[test]
 fn bit_and() {
     let coord_a = SignedCoordinate::new(0b10101010, 0b00001111, 0b10101100);
     let coord_b = SignedCoordinate::splat(0b11001100);
