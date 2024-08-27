@@ -1,3 +1,5 @@
+use std::ops::{BitAnd, BitOr, BitXor};
+
 use argentum_game_coordinate_system_macros::{Coordinate, CoordinateArithmetic};
 use min_max_traits::{Max, Min};
 use num::{CheckedAdd, CheckedDiv, CheckedMul, CheckedSub, Integer, Signed};
@@ -12,7 +14,7 @@ mod tests;
 #[signed]
 pub struct SignedCoordinate<T>
 where
-    T: Integer + Signed + Copy + CheckedAdd + CheckedSub + CheckedMul + CheckedDiv + Display + Max + Min + Arbitrary,
+    T: Integer + Signed + Copy + CheckedAdd + CheckedSub + CheckedMul + CheckedDiv + Display + Max + Min + Arbitrary + BitAnd<Output = T> + BitOr<Output = T> + BitXor<Output = T>,
 {
     pub x: T,
     pub y: T,
