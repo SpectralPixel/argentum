@@ -144,6 +144,21 @@ fn div_by_zero() {
 }
 
 #[test]
+fn rem() {
+    let result = SignedCoordinate::new(7, -2, 4) % 5;
+    let expected = SignedCoordinate::new(2, -2, 4);
+    assert_eq!(result, expected);
+}
+
+#[test]
+fn rem_assign() {
+    let mut result = SignedCoordinate::new(7, -11, 38);
+    result %= 6;
+    let expected = SignedCoordinate::new(1, -5, 2);
+    assert_eq!(result, expected);
+}
+
+#[test]
 fn neg() {
     let result = -SignedCoordinate::splat(7);
     let expected = SignedCoordinate::splat(-7);

@@ -144,6 +144,21 @@ fn div_by_zero() {
 }
 
 #[test]
+fn rem() {
+    let result = UnsignedCoordinate::<usize>::new(10, 12, 4) % 5;
+    let expected = UnsignedCoordinate::new(0, 2, 4);
+    assert_eq!(result, expected);
+}
+
+#[test]
+fn rem_assign() {
+    let mut result = UnsignedCoordinate::<usize>::new(7, 11, 38);
+    result %= 6;
+    let expected = UnsignedCoordinate::new(1, 5, 2);
+    assert_eq!(result, expected);
+}
+
+#[test]
 fn bit_and() {
     let coord_a = UnsignedCoordinate::<usize>::new(0b10101010, 0b00001111, 0b10101100);
     let coord_b = UnsignedCoordinate::splat(0b11001100);
