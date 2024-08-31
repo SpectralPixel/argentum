@@ -82,6 +82,14 @@ fn add_assign() {
 }
 
 #[test]
+fn add_assign_single() {
+    let mut result = UnsignedCoordinate::<usize>::new(10, 15, 30);
+    result += 17;
+    let expected = UnsignedCoordinate::new(27, 32, 47);
+    assert_eq!(result, expected);
+}
+
+#[test]
 #[should_panic]
 fn add_overflow() {
     let _ = UnsignedCoordinate::<usize>::MAX + UnsignedCoordinate::splat(1);
@@ -112,6 +120,14 @@ fn sub_assign() {
     let mut result = UnsignedCoordinate::<usize>::new(10, 15, 30);
     result -= UnsignedCoordinate::new(5, 10, 23);
     let expected = UnsignedCoordinate::new(5, 5, 7);
+    assert_eq!(result, expected);
+}
+
+#[test]
+fn sub_assign_single() {
+    let mut result = UnsignedCoordinate::<usize>::new(10, 15, 30);
+    result -= 0;
+    let expected = UnsignedCoordinate::new(10, 15, 30);
     assert_eq!(result, expected);
 }
 
@@ -150,6 +166,14 @@ fn mul_assign() {
 }
 
 #[test]
+fn mul_assign_single() {
+    let mut result = UnsignedCoordinate::<usize>::new(3, 360, 2);
+    result *= 3;
+    let expected = UnsignedCoordinate::new(9, 1080, 6);
+    assert_eq!(result, expected);
+}
+
+#[test]
 #[should_panic]
 fn mul_overflow() {
     let _ = UnsignedCoordinate::<usize>::MAX * UnsignedCoordinate::splat(2);
@@ -184,6 +208,14 @@ fn div_assign() {
 }
 
 #[test]
+fn div_assign_single() {
+    let mut result = UnsignedCoordinate::<usize>::new(5, 360, 21);
+    result /= 3;
+    let expected = UnsignedCoordinate::new(1, 120, 7);
+    assert_eq!(result, expected);
+}
+
+#[test]
 #[should_panic]
 fn div_by_zero() {
     let _ = UnsignedCoordinate::<usize>::MAX / UnsignedCoordinate::splat(0);
@@ -210,7 +242,15 @@ fn rem_single() {
 }
 
 #[test]
-fn rem_single_assign() {
+fn rem_assign() {
+    let mut result = UnsignedCoordinate::<usize>::new(7, 11, 38);
+    result %= UnsignedCoordinate::<usize>::splat(6);
+    let expected = UnsignedCoordinate::new(1, 5, 2);
+    assert_eq!(result, expected);
+}
+
+#[test]
+fn rem_assign_single() {
     let mut result = UnsignedCoordinate::<usize>::new(7, 11, 38);
     result %= 6;
     let expected = UnsignedCoordinate::new(1, 5, 2);
@@ -252,6 +292,15 @@ fn bit_and_assign() {
 }
 
 #[test]
+fn bit_and_assign_single() {
+    let mut coord_a = UnsignedCoordinate::<usize>::new(0b10101010, 0b00001111, 0b10101100);
+    let coord_b = 0b11001100;
+    coord_a &= coord_b;
+    let expected = UnsignedCoordinate::new(0b10001000, 0b00001100, 0b10001100);
+    assert_eq!(coord_a, expected);
+}
+
+#[test]
 fn bit_or() {
     let coord_a = UnsignedCoordinate::<usize>::new(0b10101010, 0b00001111, 0b10101100);
     let coord_b = UnsignedCoordinate::splat(0b11001100);
@@ -279,6 +328,15 @@ fn bit_or_assign() {
 }
 
 #[test]
+fn bit_or_assign_single() {
+    let mut coord_a = UnsignedCoordinate::<usize>::new(0b10101010, 0b00001111, 0b10101100);
+    let coord_b = 0b11001100;
+    coord_a |= coord_b;
+    let expected = UnsignedCoordinate::new(0b11101110, 0b11001111, 0b11101100);
+    assert_eq!(coord_a, expected);
+}
+
+#[test]
 fn bit_xor() {
     let coord_a = UnsignedCoordinate::<usize>::new(0b10101010, 0b00001111, 0b10101100);
     let coord_b = UnsignedCoordinate::splat(0b11001100);
@@ -300,6 +358,15 @@ fn bit_xor_single() {
 fn bit_xor_assign() {
     let mut coord_a = UnsignedCoordinate::<usize>::new(0b10101010, 0b00001111, 0b10101100);
     let coord_b = UnsignedCoordinate::splat(0b11001100);
+    coord_a ^= coord_b;
+    let expected = UnsignedCoordinate::new(0b01100110, 0b11000011, 0b01100000);
+    assert_eq!(coord_a, expected);
+}
+
+#[test]
+fn bit_xor_assign_single() {
+    let mut coord_a = UnsignedCoordinate::<usize>::new(0b10101010, 0b00001111, 0b10101100);
+    let coord_b = 0b11001100;
     coord_a ^= coord_b;
     let expected = UnsignedCoordinate::new(0b01100110, 0b11000011, 0b01100000);
     assert_eq!(coord_a, expected);
