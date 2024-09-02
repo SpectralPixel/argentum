@@ -14,9 +14,5 @@ mod unsigned_coordinate;
 /// would double. Heck, even this is already overkill.
 pub type CoordinateType = i32;
 
-generate_coordinate_type!(
-    Coordinate,
-    CoordinateType,
-    "3D Coordinate in absolute space.",
-    argentum_game_coordinate_system
-);
+/// 3D Coordinate in absolute space.
+pub type Coordinate = SignedCoordinate<CoordinateType>;

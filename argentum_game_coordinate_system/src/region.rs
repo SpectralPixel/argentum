@@ -1,6 +1,6 @@
 use std::num::NonZero;
 
-use crate::{Coordinate, CoordinateType};
+use crate::{Coordinate, CoordinateType, CoordinateTrait};
 
 /// `Region`'s size type.
 pub type SizeType = u8;
@@ -17,7 +17,7 @@ pub type SizeType = u8;
 /// # }
 /// # fn test() -> Option<()> {
 /// use std::num::NonZero;
-/// use argentum_game_coordinate_system::{Coordinate, Region, region::SizeType};
+/// use argentum_game_coordinate_system::{Coordinate, Region, region::SizeType, CoordinateTrait};
 ///
 /// let mut positions: Vec<Coordinate> = Vec::new();
 /// positions.push(Coordinate::new(7, 7, 7));
