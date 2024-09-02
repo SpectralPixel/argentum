@@ -1,4 +1,6 @@
-use crate::generate_coordinate_type;
+pub use coordinate_trait::CoordinateTrait;
+pub use signed_coordinate::SignedCoordinate;
+pub use unsigned_coordinate::UnsignedCoordinate;
 
 mod coordinate_trait;
 mod signed_coordinate;
