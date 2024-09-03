@@ -5,9 +5,9 @@ use crate::prelude::*;
 /// `Region`'s size type.
 pub type SizeType = u8;
 
-/// Cube-shaped iterator of `Coordinate`s
+/// Cube-shaped iterator of `GlobalCoord`s
 ///
-/// The iterator returns all `Coordinate`s from `position` to `position + size - 1`
+/// The iterator returns all `GlobalCoord`s from `position` to `position + size - 1`
 ///
 /// # Examples
 ///
@@ -19,18 +19,18 @@ pub type SizeType = u8;
 /// use std::num::NonZero;
 /// use argentum_game_coordinate_system::prelude::*;
 ///
-/// let mut positions: Vec<Coordinate> = Vec::new();
-/// positions.push(Coordinate::new(7, 7, 7));
-/// positions.push(Coordinate::new(8, 7, 7));
-/// positions.push(Coordinate::new(7, 8, 7));
-/// positions.push(Coordinate::new(8, 8, 7));
-/// positions.push(Coordinate::new(7, 7, 8));
-/// positions.push(Coordinate::new(8, 7, 8));
-/// positions.push(Coordinate::new(7, 8, 8));
-/// positions.push(Coordinate::new(8, 8, 8));
+/// let mut positions: Vec<GlobalCoord> = Vec::new();
+/// positions.push(GlobalCoord::new(7, 7, 7));
+/// positions.push(GlobalCoord::new(8, 7, 7));
+/// positions.push(GlobalCoord::new(7, 8, 7));
+/// positions.push(GlobalCoord::new(8, 8, 7));
+/// positions.push(GlobalCoord::new(7, 7, 8));
+/// positions.push(GlobalCoord::new(8, 7, 8));
+/// positions.push(GlobalCoord::new(7, 8, 8));
+/// positions.push(GlobalCoord::new(8, 8, 8));
 ///
 /// let mut i = 0;
-/// let region = Region::new(Coordinate::splat(7), NonZero::<SizeType>::new(2)?);
+/// let region = Region::new(GlobalCoord::splat(7), NonZero::<SizeType>::new(2)?);
 /// for pos in region {
 ///     println!("{i}");
 ///     assert_eq!(pos, positions[i]);
@@ -45,9 +45,9 @@ pub type SizeType = u8;
 /// Setting a `size` that is less than or equal to `0` will cause the program to crash.
 #[derive(PartialEq, Debug)]
 pub struct Region {
-    position: Coordinate,
+    position: GlobalCoord,
     size: SizeType,
-    offset: Coordinate,
+    offset: GlobalCoord,
     first_iteration: bool,
 }
 
@@ -56,11 +56,11 @@ impl Region {
     ///
     /// - `position` corresponds to the starting position of the iterator.
     /// - `size` detemines the range of the iterator. The range is exclusive. Must be larger than `0`.
-    pub fn new(position: Coordinate, size: NonZero<SizeType>) -> Self {
+    pub fn new(position: GlobalCoord, size: NonZero<SizeType>) -> Self {
         Self {
             position,
             size: SizeType::from(size),
-            offset: Coordinate::new(0, 0, 0),
+            offset: GlobalCoord::new(0, 0, 0),
             first_iteration: true,
         }
     }
@@ -72,7 +72,7 @@ impl Region {
 }
 
 impl Iterator for Region {
-    type Item = Coordinate;
+    type Item = GlobalCoord;
 
     fn next(&mut self) -> Option<Self::Item> {
         if self.first_iteration {
@@ -111,12 +111,12 @@ mod tests {
     use super::*;
 
     quickcheck! {
-        fn new(pos: Coordinate, size: NonZero<SizeType>) -> bool {
+        fn new(pos: GlobalCoord, size: NonZero<SizeType>) -> bool {
             let result =  Region::new(pos.clone(), size);
             let expected = Region {
                 position: pos,
                 size: size.get(),
-                offset: Coordinate::new(0, 0, 0),
+                offset: GlobalCoord::new(0, 0, 0),
                 first_iteration: true,
             };
             result == expected
@@ -126,7 +126,7 @@ mod tests {
     #[test]
     #[should_panic]
     fn zero_size() {
-        let region = Region::new(Coordinate::splat(0), NonZero::<SizeType>::new(0).unwrap());
+        let region = Region::new(GlobalCoord::splat(0), NonZero::<SizeType>::new(0).unwrap());
 
         let mut i = 0;
         for pos in region {
