@@ -40,3 +40,40 @@ where
     pub y: T,
     pub z: T,
 }
+
+impl<T> Coordinate<T>
+where
+    T: Integer
+        + Copy
+        + CheckedAdd
+        + CheckedSub
+        + CheckedMul
+        + CheckedDiv
+        + Display
+        + Max
+        + Min
+        + Arbitrary
+        + BitAnd<Output = T>
+        + BitOr<Output = T>
+        + BitXor<Output = T>
+        + Not<Output = T>,
+{
+    const MAX: Self = Self {
+        x: T::MAX,
+        y: T::MAX,
+        z: T::MAX,
+    };
+    const MIN: Self = Self {
+        x: T::MIN,
+        y: T::MIN,
+        z: T::MIN,
+    };
+
+    fn new(x: T, y: T, z: T) -> Self {
+        Self { x, y, z }
+    }
+
+    fn splat(n: T) -> Self {
+        Self::new(n, n, n)
+    }
+}
