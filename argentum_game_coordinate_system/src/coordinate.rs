@@ -58,22 +58,22 @@ where
         + BitXor<Output = T>
         + Not<Output = T>,
 {
-    const MAX: Self = Self {
+    pub const MAX: Self = Self {
         x: T::MAX,
         y: T::MAX,
         z: T::MAX,
     };
-    const MIN: Self = Self {
+    pub const MIN: Self = Self {
         x: T::MIN,
         y: T::MIN,
         z: T::MIN,
     };
 
-    fn new(x: T, y: T, z: T) -> Self {
+    pub fn new(x: T, y: T, z: T) -> Self {
         Self { x, y, z }
     }
 
-    fn splat(n: T) -> Self {
+    pub fn splat(n: T) -> Self {
         Self::new(n, n, n)
     }
 }
