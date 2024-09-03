@@ -1,10 +1,11 @@
-pub use coordinate_trait::CoordinateTrait;
-pub use signed_coordinate::SignedCoordinate;
-pub use unsigned_coordinate::UnsignedCoordinate;
+use std::{fmt::Display, ops::{BitAnd, BitOr, BitXor, Not}};
 
-mod coordinate_trait;
-mod signed_coordinate;
-mod unsigned_coordinate;
+use min_max_traits::{Max, Min};
+use num::{CheckedAdd, CheckedDiv, CheckedMul, CheckedSub, Integer};
+use quickcheck::Arbitrary;
+
+#[cfg(test)]
+mod tests;
 
 /// `Coordinate`'s field type.
 ///
@@ -15,4 +16,25 @@ mod unsigned_coordinate;
 pub type CoordinateType = i32;
 
 /// 3D Coordinate in absolute space.
-pub type Coordinate = SignedCoordinate<CoordinateType>;
+#[derive(Clone, Debug, PartialEq)]
+pub struct Coordinate<T>
+where
+    T: Integer
+        + Copy
+        + CheckedAdd
+        + CheckedSub
+        + CheckedMul
+        + CheckedDiv
+        + Display
+        + Max
+        + Min
+        + Arbitrary
+        + BitAnd<Output = T>
+        + BitOr<Output = T>
+        + BitXor<Output = T>
+        + Not<Output = T>,
+{
+    pub x: T,
+    pub y: T,
+    pub z: T,
+}
