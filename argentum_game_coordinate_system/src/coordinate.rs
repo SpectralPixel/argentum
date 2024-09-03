@@ -99,3 +99,30 @@ where
         write!(f, "({}: {}, {}, {})", stringify!(#name), self.x, self.y, self.z)
     }
 }
+
+
+impl<T> Arbitrary for Coordinate<T>
+where
+    T: Integer
+        + Copy
+        + CheckedAdd
+        + CheckedSub
+        + CheckedMul
+        + CheckedDiv
+        + Display
+        + Max
+        + Min
+        + Arbitrary
+        + BitAnd<Output = T>
+        + BitOr<Output = T>
+        + BitXor<Output = T>
+        + Not<Output = T>,
+{
+    fn arbitrary(g: &mut quickcheck::Gen) -> Self {
+        Self::new(
+            T::arbitrary(g),
+            T::arbitrary(g),
+            T::arbitrary(g),
+        )
+    }
+}
