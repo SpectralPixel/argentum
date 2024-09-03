@@ -77,3 +77,25 @@ where
         Self::new(n, n, n)
     }
 }
+
+impl<T> Display for Coordinate<T>
+where
+    T: Integer
+        + Copy
+        + CheckedAdd
+        + CheckedSub
+        + CheckedMul
+        + CheckedDiv
+        + Display
+        + Max
+        + Min
+        + Arbitrary
+        + BitAnd<Output = T>
+        + BitOr<Output = T>
+        + BitXor<Output = T>
+        + Not<Output = T>,
+{
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "({}: {}, {}, {})", stringify!(#name), self.x, self.y, self.z)
+    }
+}
