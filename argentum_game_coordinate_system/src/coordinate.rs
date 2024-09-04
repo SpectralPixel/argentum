@@ -7,7 +7,7 @@ use quickcheck::Arbitrary;
 #[cfg(test)]
 mod tests;
 
-/// `Coordinate`'s field type.
+/// `Coord`'s field type.
 ///
 /// i32: From −2,147,483,648 to 2,147,483,647.
 ///
@@ -15,11 +15,11 @@ mod tests;
 /// would double. Heck, even this is already overkill.
 pub type CoordinateType = i32;
 
-pub type GlobalCoord = Coordinate<CoordinateType>;
+pub type GlobalCoord = Coord<CoordinateType>;
 
 /// 3D Coordinate in absolute space.
 #[derive(Clone, Debug, PartialEq)]
-pub struct Coordinate<T>
+pub struct Coord<T>
 where
     T: Integer
         + Copy
@@ -41,7 +41,7 @@ where
     pub z: T,
 }
 
-impl<T> Coordinate<T>
+impl<T> Coord<T>
 where
     T: Integer
         + Copy
@@ -78,7 +78,7 @@ where
     }
 }
 
-impl<T> Display for Coordinate<T>
+impl<T> Display for Coord<T>
 where
     T: Integer
         + Copy
@@ -101,7 +101,7 @@ where
 }
 
 
-impl<T> Arbitrary for Coordinate<T>
+impl<T> Arbitrary for Coord<T>
 where
     T: Integer
         + Copy
