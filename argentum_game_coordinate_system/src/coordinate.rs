@@ -15,7 +15,7 @@ mod tests;
 /// would double. Heck, even this is already overkill.
 pub type CoordinateType = i32;
 
-pub type GlobalCoord = Coord<CoordinateType>;
+pub type Coordinate = Coord<CoordinateType>;
 
 /// 3D Coordinate in absolute space.
 #[derive(Clone, Debug, PartialEq)]

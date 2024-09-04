@@ -1,2 +1,2 @@
-pub use crate::coordinate::{Coord, CoordinateType, GlobalCoord};
+pub use crate::coordinate::{Coord, CoordinateType, Coordinate};
 pub use crate::region::Region;
