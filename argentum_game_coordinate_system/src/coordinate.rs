@@ -1,7 +1,7 @@
 use std::{fmt::Display, ops::{BitAnd, BitOr, BitXor, Not}};
 
 use min_max_traits::{Max, Min};
-use num::{CheckedAdd, CheckedDiv, CheckedMul, CheckedSub, Integer};
+use num::{CheckedAdd, CheckedDiv, CheckedMul, CheckedSub, Integer, Signed};
 use quickcheck::Arbitrary;
 
 #[cfg(test)]
@@ -124,5 +124,30 @@ where
             T::arbitrary(g),
             T::arbitrary(g),
         )
+    }
+}
+
+impl<T> std::ops::Neg for Coord<T>
+where
+    T: Integer
+        + Copy
+        + CheckedAdd
+        + CheckedSub
+        + CheckedMul
+        + CheckedDiv
+        + Display
+        + Max
+        + Min
+        + Arbitrary
+        + BitAnd<Output = T>
+        + BitOr<Output = T>
+        + BitXor<Output = T>
+        + Not<Output = T>
+        + Signed,
+{
+    type Output = Self;
+
+    fn neg(self) -> Self::Output {
+        Self::new(-self.x, -self.y, -self.z)
     }
 }
