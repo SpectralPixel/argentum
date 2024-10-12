@@ -1,7 +1,4 @@
-use std::{
-    fmt::Display,
-    ops::{BitAnd, BitOr, BitXor, Not},
-};
+use std::{fmt::Display, ops::{BitAnd, BitOr, BitXor, Not}};
 
 use min_max_traits::{Max, Min};
 use num::{CheckedAdd, CheckedDiv, CheckedMul, CheckedSub, Integer, Signed};
@@ -9,7 +6,6 @@ use quickcheck::Arbitrary;
 
 #[cfg(test)]
 mod tests;
-mod arithmetic;
 
 /// `Coord`'s field type.
 ///
@@ -100,16 +96,10 @@ where
         + Not<Output = T>,
 {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(
-            f,
-            "({}: {}, {}, {})",
-            stringify!(#name),
-            self.x,
-            self.y,
-            self.z
-        )
+        write!(f, "({}: {}, {}, {})", stringify!(#name), self.x, self.y, self.z)
     }
 }
+
 
 impl<T> Arbitrary for Coord<T>
 where
@@ -129,7 +119,11 @@ where
         + Not<Output = T>,
 {
     fn arbitrary(g: &mut quickcheck::Gen) -> Self {
-        Self::new(T::arbitrary(g), T::arbitrary(g), T::arbitrary(g))
+        Self::new(
+            T::arbitrary(g),
+            T::arbitrary(g),
+            T::arbitrary(g),
+        )
     }
 }
 
