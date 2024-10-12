@@ -1,5 +1,6 @@
 use std::{fmt::Display, ops::{BitAnd, BitOr, BitXor, Not}};
 
+use argentum_game_coordinate_system_macros::CoordinateArithmetic;
 use min_max_traits::{Max, Min};
 use num::{CheckedAdd, CheckedDiv, CheckedMul, CheckedSub, Integer, Signed};
 use quickcheck::Arbitrary;
@@ -18,7 +19,7 @@ pub type CoordinateType = i32;
 pub type Coordinate = Coord<CoordinateType>;
 
 /// 3D Coordinate in absolute space.
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Clone, Debug, PartialEq, CoordinateArithmetic)]
 pub struct Coord<T>
 where
     T: Integer
