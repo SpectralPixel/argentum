@@ -28,8 +28,8 @@ where
         let panic = || panic!("{} cannot be added by {}! This may be caused by integer overflow.", self, rhs);
         Self::new(
             T::checked_add(&self.x, &rhs.x).unwrap_or_else(panic),
-            T::checked_add(&self.x, &rhs.x).unwrap_or_else(panic),
-            T::checked_add(&self.x, &rhs.x).unwrap_or_else(panic),
+            T::checked_add(&self.y, &rhs.y).unwrap_or_else(panic),
+            T::checked_add(&self.z, &rhs.z).unwrap_or_else(panic),
         )
     }
 }
