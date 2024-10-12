@@ -1,4 +1,7 @@
-use std::{fmt::Display, ops::{BitAnd, BitOr, BitXor, Not}};
+use std::{
+    fmt::Display,
+    ops::{BitAnd, BitOr, BitXor, Not},
+};
 
 use argentum_game_coordinate_system_macros::CoordinateArithmetic;
 use min_max_traits::{Max, Min};
@@ -97,10 +100,16 @@ where
         + Not<Output = T>,
 {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "({}: {}, {}, {})", stringify!(#name), self.x, self.y, self.z)
+        write!(
+            f,
+            "({}: {}, {}, {})",
+            stringify!(#name),
+            self.x,
+            self.y,
+            self.z
+        )
     }
 }
-
 
 impl<T> Arbitrary for Coord<T>
 where
@@ -120,11 +129,7 @@ where
         + Not<Output = T>,
 {
     fn arbitrary(g: &mut quickcheck::Gen) -> Self {
-        Self::new(
-            T::arbitrary(g),
-            T::arbitrary(g),
-            T::arbitrary(g),
-        )
+        Self::new(T::arbitrary(g), T::arbitrary(g), T::arbitrary(g))
     }
 }
 
