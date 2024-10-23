@@ -102,8 +102,7 @@ where
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(
             f,
-            "({}: {}, {}, {})",
-            stringify!(#name),
+            "(Coordinate: {}, {}, {})",
             self.x,
             self.y,
             self.z
