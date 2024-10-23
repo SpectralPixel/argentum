@@ -11,7 +11,7 @@ use quickcheck::Arbitrary;
 #[cfg(test)]
 mod tests;
 
-/// `Coord`'s field type.
+/// Standard coordinate's field type.
 ///
 /// i32: From −2,147,483,648 to 2,147,483,647.
 ///
