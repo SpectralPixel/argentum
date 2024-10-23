@@ -128,6 +128,19 @@ where
     pub fn splat(n: T) -> Self {
         Self::new(n, n, n)
     }
+
+    /// The zero coordinate
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use argentum_game_coordinate_system::prelude::{Coordinate, CoordinateType};
+    /// assert_eq!(Coordinate::zero().x, 0);
+    /// assert_eq!(Coordinate::zero().y, 0);
+    /// assert_eq!(Coordinate::zero().z, 0);
+    pub fn zero() -> Self {
+        Self::splat(T::zero())
+    }
 }
 
 impl<T> Display for Coord<T>
