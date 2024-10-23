@@ -62,21 +62,64 @@ where
         + BitXor<Output = T>
         + Not<Output = T>,
 {
+    /// Represents the largest possible `Coordinate` on all axes.
+    /// 
+    /// # Examples
+    /// 
+    /// ```
+    /// use argentum_game_coordinate_system::prelude::{Coordinate, CoordinateType};
+    /// assert_eq!(Coordinate::MAX.x, CoordinateType::MAX);
+    /// assert_eq!(Coordinate::MAX.y, CoordinateType::MAX);
+    /// assert_eq!(Coordinate::MAX.z, CoordinateType::MAX);
+    /// ```
     pub const MAX: Self = Self {
         x: T::MAX,
         y: T::MAX,
         z: T::MAX,
     };
+
+    /// Represents the smallest possible `Coordinate` on all axes.
+    /// 
+    /// # Examples
+    /// 
+    /// ```
+    /// use argentum_game_coordinate_system::prelude::{Coordinate, CoordinateType};
+    /// assert_eq!(Coordinate::MIN.x, CoordinateType::MIN);
+    /// assert_eq!(Coordinate::MIN.y, CoordinateType::MIN);
+    /// assert_eq!(Coordinate::MIN.z, CoordinateType::MIN);
+    /// ```
     pub const MIN: Self = Self {
         x: T::MIN,
         y: T::MIN,
         z: T::MIN,
     };
 
+    /// Creates a new `Coordinate`.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use argentum_game_coordinate_system::prelude::Coordinate;
+    /// let pos = Coordinate::new(1, 2, 3);
+    /// assert_eq!(pos.x, 1);
+    /// assert_eq!(pos.y, 2);
+    /// assert_eq!(pos.z, 3);
+    /// ```
     pub fn new(x: T, y: T, z: T) -> Self {
         Self { x, y, z }
     }
 
+    /// Creates a new `Coordinate`, assigning all values to the input.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use argentum_game_coordinate_system::prelude::Coordinate;
+    /// let pos = Coordinate::splat(7);
+    /// assert_eq!(pos.x, 7);
+    /// assert_eq!(pos.y, 7);
+    /// assert_eq!(pos.z, 7);
+    /// ```
     pub fn splat(n: T) -> Self {
         Self::new(n, n, n)
     }
