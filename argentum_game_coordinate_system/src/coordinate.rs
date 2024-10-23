@@ -63,9 +63,9 @@ where
         + Not<Output = T>,
 {
     /// Represents the largest possible `Coordinate` on all axes.
-    /// 
+    ///
     /// # Examples
-    /// 
+    ///
     /// ```
     /// use argentum_game_coordinate_system::prelude::{Coordinate, CoordinateType};
     /// assert_eq!(Coordinate::MAX.x, CoordinateType::MAX);
@@ -79,9 +79,9 @@ where
     };
 
     /// Represents the smallest possible `Coordinate` on all axes.
-    /// 
+    ///
     /// # Examples
-    /// 
+    ///
     /// ```
     /// use argentum_game_coordinate_system::prelude::{Coordinate, CoordinateType};
     /// assert_eq!(Coordinate::MIN.x, CoordinateType::MIN);
@@ -143,13 +143,7 @@ where
         + Not<Output = T>,
 {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(
-            f,
-            "(Coordinate: {}, {}, {})",
-            self.x,
-            self.y,
-            self.z
-        )
+        write!(f, "(Coordinate: {}, {}, {})", self.x, self.y, self.z)
     }
 }
 

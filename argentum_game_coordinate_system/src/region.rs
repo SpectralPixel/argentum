@@ -126,7 +126,10 @@ mod tests {
     #[test]
     #[should_panic]
     fn zero_size() {
-        let region = Region::new(Coordinate::splat(0), NonZero::<RegionSizeType>::new(0).unwrap());
+        let region = Region::new(
+            Coordinate::splat(0),
+            NonZero::<RegionSizeType>::new(0).unwrap(),
+        );
 
         let mut i = 0;
         for pos in region {
