@@ -19,9 +19,12 @@ mod tests;
 /// would double. Heck, even this is already overkill.
 pub type CoordinateType = i32;
 
+/// The standard coordinate type for Argentum.
+/// A 3D Coordinate in absolute space.
 pub type Coordinate = Coord<CoordinateType>;
 
-/// 3D Coordinate in absolute space.
+/// A base type to define other coodinate type aliases from.
+/// To work with the standard coordinate system for Argentum, use the other type.
 #[derive(Clone, Debug, PartialEq, CoordinateArithmetic)]
 pub struct Coord<T>
 where
