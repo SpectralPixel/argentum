@@ -6,7 +6,6 @@
 //! For more information about Argentum, see the `argentum_game` crate.
 
 mod coordinate;
-mod macros;
-pub mod region;
+mod region;
 
 pub mod prelude;
