@@ -5,7 +5,11 @@
 //!
 //! For more information about Argentum, see the `argentum_game` crate.
 
+/// Contains `Coordinate` and similar structs.
 pub mod coordinate;
+
+/// Contains `Region` and similar structs.
 pub mod region;
 
+/// Import the prelude to access all the crate's relevant items.
 pub mod prelude;
