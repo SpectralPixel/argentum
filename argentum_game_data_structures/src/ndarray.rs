@@ -6,6 +6,16 @@ use ndarray::{Array3, Ix3};
 
 pub struct GridCoord(Coord<RegionSizeType>);
 
+impl Into<Ix3> for GridCoord {
+    fn into(self) -> Ix3 {
+        Ix3(
+            usize::from(self.0.x),
+            usize::from(self.0.y),
+            usize::from(self.0.z),
+        )
+    }
+}
+
 pub struct VoxelGrid {
     size: RegionSizeType,
     data: Array3<Voxel>,
