@@ -7,7 +7,7 @@ use ndarray::{Array3, Ix3};
 #[derive(Debug)]
 pub struct GridCoord(Coord<RegionSizeType>);
 
-impl Into<Ix3> for GridCoord {
+impl Into<Ix3> for &GridCoord {
     fn into(self) -> Ix3 {
         Ix3(
             usize::from(self.0.x),
