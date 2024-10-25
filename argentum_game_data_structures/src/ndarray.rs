@@ -31,8 +31,8 @@ impl VoxelGrid {
         }
     }
 
-    pub fn get(&self, pos: GridCoord) -> Option<Voxel> {
-        None
+    pub fn get(&self, pos: GridCoord) -> Option<&Voxel> {
+        self.data.get::<Ix3>(pos.into())
     }
 }
 
