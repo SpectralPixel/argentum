@@ -4,6 +4,7 @@ use argentum_game_coordinate_system::prelude::{Coord, RegionSizeType};
 use argentum_game_voxel::Voxel;
 use ndarray::{Array3, Ix3};
 
+#[derive(Debug)]
 pub struct GridCoord(Coord<RegionSizeType>);
 
 impl Into<Ix3> for GridCoord {
