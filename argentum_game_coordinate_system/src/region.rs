@@ -3,7 +3,7 @@ use std::num::NonZero;
 use crate::prelude::*;
 
 /// `Region`'s size type.
-pub type SizeType = u8;
+pub type RegionSizeType = u8;
 
 /// Cube-shaped iterator of `Coordinate`s
 ///
@@ -30,7 +30,7 @@ pub type SizeType = u8;
 /// positions.push(Coordinate::new(8, 8, 8));
 ///
 /// let mut i = 0;
-/// let region = Region::new(Coordinate::splat(7), NonZero::<SizeType>::new(2)?);
+/// let region = Region::new(Coordinate::splat(7), NonZero::<RegionSizeType>::new(2)?);
 /// for pos in region {
 ///     println!("{i}");
 ///     assert_eq!(pos, positions[i]);
@@ -46,7 +46,7 @@ pub type SizeType = u8;
 #[derive(PartialEq, Debug)]
 pub struct Region {
     position: Coordinate,
-    size: SizeType,
+    size: RegionSizeType,
     offset: Coordinate,
     first_iteration: bool,
 }
@@ -56,17 +56,17 @@ impl Region {
     ///
     /// - `position` corresponds to the starting position of the iterator.
     /// - `size` detemines the range of the iterator. The range is exclusive. Must be larger than `0`.
-    pub fn new(position: Coordinate, size: NonZero<SizeType>) -> Self {
+    pub fn new(position: Coordinate, size: NonZero<RegionSizeType>) -> Self {
         Self {
             position,
-            size: SizeType::from(size),
+            size: RegionSizeType::from(size),
             offset: Coordinate::new(0, 0, 0),
             first_iteration: true,
         }
     }
 
     /// Returns the `Region`'s size.
-    pub fn size(&self) -> SizeType {
+    pub fn size(&self) -> RegionSizeType {
         self.size
     }
 }
@@ -111,7 +111,7 @@ mod tests {
     use super::*;
 
     quickcheck! {
-        fn new(pos: Coordinate, size: NonZero<SizeType>) -> bool {
+        fn new(pos: Coordinate, size: NonZero<RegionSizeType>) -> bool {
             let result =  Region::new(pos.clone(), size);
             let expected = Region {
                 position: pos,
@@ -126,7 +126,10 @@ mod tests {
     #[test]
     #[should_panic]
     fn zero_size() {
-        let region = Region::new(Coordinate::splat(0), NonZero::<SizeType>::new(0).unwrap());
+        let region = Region::new(
+            Coordinate::splat(0),
+            NonZero::<RegionSizeType>::new(0).unwrap(),
+        );
 
         let mut i = 0;
         for pos in region {

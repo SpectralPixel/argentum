@@ -1,2 +1,2 @@
-pub use crate::coordinate::{Coordinate, CoordinateType, CoordinateTrait, UnsignedCoordinate, SignedCoordinate};
-pub use crate::region::Region;
+pub use crate::coordinate::{Coord, Coordinate, CoordinateType};
+pub use crate::region::{Region, RegionSizeType};
