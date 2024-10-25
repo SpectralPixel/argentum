@@ -1,1 +1,1 @@
-pub use crate::ndarray::VoxelGrid;
+pub use crate::ndarray::{VoxelGrid, GridCoord};
