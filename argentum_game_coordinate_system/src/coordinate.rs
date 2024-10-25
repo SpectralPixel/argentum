@@ -141,6 +141,27 @@ where
     pub fn zero() -> Self {
         Self::splat(T::zero())
     }
+
+    //BRO WTF U  mean THAT THE  doc COMMENTS ARENT REFERRING TO THE STANDARD INDEPENDENTCOORD TYPE LIKE BRO?????
+    //ALSO, FINISH THE UNIT X AND UNIT Y AND UNIT z
+    //MAKE SURE TO MAKE A NON-DOC COMMENT TELLING PEOPLE TO NEVER MAKE A "NEGATIVE UNIT" FUNCTION, THATS WHAT THE `-` OPERATOR IS FOR
+
+    /// Returns the coordinate (1, 0, 0)
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use argentum_game_coordinate_system::prelude::{Coordinate, CoordinateType};
+    /// assert_eq!(Coordinate::unit_x().x, 1);
+    /// assert_eq!(Coordinate::unit_x().y, 0);
+    /// assert_eq!(Coordinate::unit_x().z, 0);
+    pub fn unit_x() -> Self {
+        Self::new(
+            T::one(),
+            T::zero(),
+            T::zero(),
+        )
+    }
 }
 
 impl<T> Display for Coord<T>
