@@ -2,5 +2,3 @@
 
 mod prelude;
 mod ndarray;
-
-pub use ndarray::VoxelGrid;
