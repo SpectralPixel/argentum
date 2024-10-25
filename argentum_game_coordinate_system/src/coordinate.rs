@@ -67,15 +67,15 @@ where
         + BitXor<Output = T>
         + Not<Output = T>,
 {
-    /// Represents the largest possible `Coordinate` on all axes.
+    /// Represents the largest possible coordinate on all axes.
     ///
     /// # Examples
     ///
     /// ```
-    /// use argentum_game_coordinate_system::prelude::{Coordinate, CoordinateType};
-    /// assert_eq!(Coordinate::MAX.x, CoordinateType::MAX);
-    /// assert_eq!(Coordinate::MAX.y, CoordinateType::MAX);
-    /// assert_eq!(Coordinate::MAX.z, CoordinateType::MAX);
+    /// use argentum_game_coordinate_system::prelude::Coord;
+    /// assert_eq!(Coord::<i8>::MAX.x, i8::MAX);
+    /// assert_eq!(Coord::<i8>::MAX.y, i8::MAX);
+    /// assert_eq!(Coord::<i8>::MAX.z, i8::MAX);
     /// ```
     pub const MAX: Self = Self {
         x: T::MAX,
@@ -83,15 +83,15 @@ where
         z: T::MAX,
     };
 
-    /// Represents the smallest possible `Coordinate` on all axes.
+    /// Represents the smallest possible coordinate on all axes.
     ///
     /// # Examples
     ///
     /// ```
-    /// use argentum_game_coordinate_system::prelude::{Coordinate, CoordinateType};
-    /// assert_eq!(Coordinate::MIN.x, CoordinateType::MIN);
-    /// assert_eq!(Coordinate::MIN.y, CoordinateType::MIN);
-    /// assert_eq!(Coordinate::MIN.z, CoordinateType::MIN);
+    /// use argentum_game_coordinate_system::prelude::Coord;
+    /// assert_eq!(Coord::<i8>::MIN.x, i8::MIN);
+    /// assert_eq!(Coord::<i8>::MIN.y, i8::MIN);
+    /// assert_eq!(Coord::<i8>::MIN.z, i8::MIN);
     /// ```
     pub const MIN: Self = Self {
         x: T::MIN,
@@ -99,13 +99,13 @@ where
         z: T::MIN,
     };
 
-    /// Creates a new `Coordinate`.
+    /// Creates a new coordinate.
     ///
     /// # Examples
     ///
     /// ```
-    /// use argentum_game_coordinate_system::prelude::Coordinate;
-    /// let pos = Coordinate::new(1, 2, 3);
+    /// use argentum_game_coordinate_system::prelude::Coord;
+    /// let pos = Coord::<i8>::new(1, 2, 3);
     /// assert_eq!(pos.x, 1);
     /// assert_eq!(pos.y, 2);
     /// assert_eq!(pos.z, 3);
@@ -114,13 +114,13 @@ where
         Self { x, y, z }
     }
 
-    /// Creates a new `Coordinate`, assigning all values to the input.
+    /// Creates a new coordinate, assigning all values to the input.
     ///
     /// # Examples
     ///
     /// ```
-    /// use argentum_game_coordinate_system::prelude::Coordinate;
-    /// let pos = Coordinate::splat(7);
+    /// use argentum_game_coordinate_system::prelude::Coord;
+    /// let pos = Coord::<i8>::splat(7);
     /// assert_eq!(pos.x, 7);
     /// assert_eq!(pos.y, 7);
     /// assert_eq!(pos.z, 7);
@@ -129,30 +129,24 @@ where
         Self::new(n, n, n)
     }
 
-    /// The zero coordinate
-    ///
     /// # Examples
     ///
     /// ```
-    /// use argentum_game_coordinate_system::prelude::{Coordinate, CoordinateType};
-    /// assert_eq!(Coordinate::zero().x, 0);
-    /// assert_eq!(Coordinate::zero().y, 0);
-    /// assert_eq!(Coordinate::zero().z, 0);
+    /// use argentum_game_coordinate_system::prelude::Coord;
+    /// assert_eq!(Coord::<i8>::zero().x, 0);
+    /// assert_eq!(Coord::<i8>::zero().y, 0);
+    /// assert_eq!(Coord::<i8>::zero().z, 0);
     pub fn zero() -> Self {
         Self::splat(T::zero())
     }
 
-    //BRO WTF U  mean THAT THE  doc COMMENTS ARENT REFERRING TO THE STANDARD INDEPENDENTCOORD TYPE LIKE BRO?????
-    //ALSO, FINISH THE UNIT X AND UNIT Y AND UNIT z
-    //MAKE SURE TO MAKE A NON-DOC COMMENT TELLING PEOPLE TO NEVER MAKE A "NEGATIVE UNIT" FUNCTION, THATS WHAT THE `-` OPERATOR IS FOR
-
     /// # Examples
     ///
     /// ```
-    /// use argentum_game_coordinate_system::prelude::Coordinate;
-    /// assert_eq!(Coordinate::unit_x().x, 1);
-    /// assert_eq!(Coordinate::unit_x().y, 0);
-    /// assert_eq!(Coordinate::unit_x().z, 0);
+    /// use argentum_game_coordinate_system::prelude::Coord;
+    /// assert_eq!(Coord::<i8>::unit_x().x, 1);
+    /// assert_eq!(Coord::<i8>::unit_x().y, 0);
+    /// assert_eq!(Coord::<i8>::unit_x().z, 0);
     pub fn unit_x() -> Self {
         Self::new(T::one(), T::zero(), T::zero())
     }
@@ -160,10 +154,10 @@ where
     /// # Examples
     ///
     /// ```
-    /// use argentum_game_coordinate_system::prelude::Coordinate;
-    /// assert_eq!(Coordinate::unit_y().x, 0);
-    /// assert_eq!(Coordinate::unit_y().y, 1);
-    /// assert_eq!(Coordinate::unit_y().z, 0);
+    /// use argentum_game_coordinate_system::prelude::Coord;
+    /// assert_eq!(Coord::<i8>::unit_y().x, 0);
+    /// assert_eq!(Coord::<i8>::unit_y().y, 1);
+    /// assert_eq!(Coord::<i8>::unit_y().z, 0);
     pub fn unit_y() -> Self {
         Self::new(T::zero(), T::one(), T::zero())
     }
@@ -171,10 +165,10 @@ where
     /// # Examples
     ///
     /// ```
-    /// use argentum_game_coordinate_system::prelude::Coordinate;
-    /// assert_eq!(Coordinate::unit_z().x, 0);
-    /// assert_eq!(Coordinate::unit_z().y, 0);
-    /// assert_eq!(Coordinate::unit_z().z, 1);
+    /// use argentum_game_coordinate_system::prelude::Coord;
+    /// assert_eq!(Coord::<i8>::unit_z().x, 0);
+    /// assert_eq!(Coord::<i8>::unit_z().y, 0);
+    /// assert_eq!(Coord::<i8>::unit_z().z, 1);
     pub fn unit_z() -> Self {
         Self::new(T::zero(), T::zero(), T::one())
     }
@@ -182,10 +176,10 @@ where
     /// # Examples
     ///
     /// ```
-    /// use argentum_game_coordinate_system::prelude::{Coordinate, CoordinateType};
-    /// assert_eq!(Coordinate::one().x, 1);
-    /// assert_eq!(Coordinate::one().y, 1);
-    /// assert_eq!(Coordinate::one().z, 1);
+    /// use argentum_game_coordinate_system::prelude::Coord;
+    /// assert_eq!(Coord::<i8>::one().x, 1);
+    /// assert_eq!(Coord::<i8>::one().y, 1);
+    /// assert_eq!(Coord::<i8>::one().z, 1);
     pub fn one() -> Self {
         Self::splat(T::one())
     }
