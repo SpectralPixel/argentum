@@ -53,4 +53,24 @@ mod tests {
             true
         }
     }
+
+    #[test]
+    fn get() {
+        let grid = VoxelGrid::new(NonZero::<u8>::new(1).unwrap());
+        let _ = grid.get(&GridCoord(Coord::zero()));
+    }
+
+    #[test]
+    #[should_panic]
+    fn get_out_of_bounds() {
+        let grid = VoxelGrid::new(NonZero::<u8>::new(1).unwrap());
+        let _ = grid.get(&GridCoord(Coord::new(2, 0, 0)));
+    }
+
+    #[test]
+    #[should_panic]
+    fn get_out_of_bounds_2() {
+        let grid = VoxelGrid::new(NonZero::<u8>::new(1).unwrap());
+        let _ = grid.get(&GridCoord(Coord::one()));
+    }
 }
