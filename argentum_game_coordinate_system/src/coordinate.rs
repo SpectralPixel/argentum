@@ -178,6 +178,17 @@ where
     pub fn unit_z() -> Self {
         Self::new(T::zero(), T::zero(), T::one())
     }
+
+    /// # Examples
+    ///
+    /// ```
+    /// use argentum_game_coordinate_system::prelude::{Coordinate, CoordinateType};
+    /// assert_eq!(Coordinate::one().x, 1);
+    /// assert_eq!(Coordinate::one().y, 1);
+    /// assert_eq!(Coordinate::one().z, 1);
+    pub fn one() -> Self {
+        Self::splat(T::one())
+    }
 }
 
 impl<T> Display for Coord<T>
