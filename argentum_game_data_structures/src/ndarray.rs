@@ -1,16 +1,18 @@
 use std::num::NonZero;
 
-use argentum_game_coordinate_system::{region::SizeType, Coordinate};
+use argentum_game_coordinate_system::prelude::{Coord, RegionSizeType};
 use argentum_game_voxel::Voxel;
 use ndarray::{Array3, Ix3};
 
+type GridCoord = Coord<RegionSizeType>;
+
 pub struct VoxelGrid {
-    size: SizeType,
+    size: RegionSizeType,
     data: Array3<Voxel>,
 }
 
 impl VoxelGrid {
-    pub fn new(size: NonZero<SizeType>) -> Self {
+    pub fn new(size: NonZero<RegionSizeType>) -> Self {
         let size = size.get();
         let s = usize::from(size);
         Self {
@@ -19,7 +21,7 @@ impl VoxelGrid {
         }
     }
 
-    pub fn get(&self, pos: Coordinate) -> Option<Voxel> {
+    pub fn get(&self, pos: GridCoord) -> Option<Voxel> {
         None
     }
 }
@@ -31,7 +33,7 @@ mod tests {
     use super::*;
 
     quickcheck! {
-        fn new(size: NonZero<SizeType>) -> bool {
+        fn new(size: NonZero<RegionSizeType>) -> bool {
             let _ = VoxelGrid::new(size);
             true
         }
