@@ -1,6 +1,6 @@
 //! # Argentum - Coordinate System
 //!
-//! `argentum_game_coordinate_system` contains the coordinate system that is
+//! This crate contains the coordinate system that is
 //! used by Argentum and some utilities related to it.
 //!
 //! Import the `prelude` to gain access to all the crate's types.
