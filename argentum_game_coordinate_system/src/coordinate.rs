@@ -146,55 +146,43 @@ where
     //ALSO, FINISH THE UNIT X AND UNIT Y AND UNIT z
     //MAKE SURE TO MAKE A NON-DOC COMMENT TELLING PEOPLE TO NEVER MAKE A "NEGATIVE UNIT" FUNCTION, THATS WHAT THE `-` OPERATOR IS FOR
 
-    /// Returns the coordinate (1, 0, 0)
+    /// Returns the unit X coordinate
     ///
     /// # Examples
     ///
     /// ```
-    /// use argentum_game_coordinate_system::prelude::{Coordinate, CoordinateType};
+    /// use argentum_game_coordinate_system::prelude::Coordinate;
     /// assert_eq!(Coordinate::unit_x().x, 1);
     /// assert_eq!(Coordinate::unit_x().y, 0);
     /// assert_eq!(Coordinate::unit_x().z, 0);
     pub fn unit_x() -> Self {
-        Self::new(
-            T::one(),
-            T::zero(),
-            T::zero(),
-        )
+        Self::new(T::one(), T::zero(), T::zero())
     }
 
-    /// Returns the coordinate (0, 1, 0)
+    /// Returns the unit Y coordinate
     ///
     /// # Examples
     ///
     /// ```
-    /// use argentum_game_coordinate_system::prelude::{Coordinate, CoordinateType};
+    /// use argentum_game_coordinate_system::prelude::Coordinate;
     /// assert_eq!(Coordinate::unit_y().x, 0);
     /// assert_eq!(Coordinate::unit_y().y, 1);
     /// assert_eq!(Coordinate::unit_y().z, 0);
     pub fn unit_y() -> Self {
-        Self::new(
-            T::zero(),
-            T::one(),
-            T::zero(),
-        )
+        Self::new(T::zero(), T::one(), T::zero())
     }
 
-    /// Returns the coordinate (0, 0, 1)
+    /// Returns the unit Z coordinate
     ///
     /// # Examples
     ///
     /// ```
-    /// use argentum_game_coordinate_system::prelude::{Coordinate, CoordinateType};
+    /// use argentum_game_coordinate_system::prelude::Coordinate;
     /// assert_eq!(Coordinate::unit_z().x, 0);
     /// assert_eq!(Coordinate::unit_z().y, 0);
     /// assert_eq!(Coordinate::unit_z().z, 1);
     pub fn unit_z() -> Self {
-        Self::new(
-            T::zero(),
-            T::zero(),
-            T::one(),
-        )
+        Self::new(T::zero(), T::zero(), T::one())
     }
 }
 
