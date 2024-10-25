@@ -179,6 +179,23 @@ where
             T::zero(),
         )
     }
+
+    /// Returns the coordinate (0, 0, 1)
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use argentum_game_coordinate_system::prelude::{Coordinate, CoordinateType};
+    /// assert_eq!(Coordinate::unit_z().x, 0);
+    /// assert_eq!(Coordinate::unit_z().y, 0);
+    /// assert_eq!(Coordinate::unit_z().z, 1);
+    pub fn unit_z() -> Self {
+        Self::new(
+            T::zero(),
+            T::zero(),
+            T::one(),
+        )
+    }
 }
 
 impl<T> Display for Coord<T>
