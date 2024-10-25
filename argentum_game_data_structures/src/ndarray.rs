@@ -32,7 +32,11 @@ impl VoxelGrid {
         }
     }
 
-    pub fn get(&self, pos: GridCoord) -> Option<&Voxel> {
+    pub fn get(&self, pos: &GridCoord) -> &Voxel {
+        self.get_checked(&pos).unwrap_or_else(|| panic!("The coordinate {:?} is out of bounds! The maximum size for voxel grids is {}.", pos, self.size))
+    }
+
+    pub fn get_checked(&self, pos: &GridCoord) -> Option<&Voxel> {
         self.data.get::<Ix3>(pos.into())
     }
 }
