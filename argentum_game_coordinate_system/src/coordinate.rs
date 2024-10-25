@@ -146,8 +146,6 @@ where
     //ALSO, FINISH THE UNIT X AND UNIT Y AND UNIT z
     //MAKE SURE TO MAKE A NON-DOC COMMENT TELLING PEOPLE TO NEVER MAKE A "NEGATIVE UNIT" FUNCTION, THATS WHAT THE `-` OPERATOR IS FOR
 
-    /// Returns the unit X coordinate
-    ///
     /// # Examples
     ///
     /// ```
@@ -159,8 +157,6 @@ where
         Self::new(T::one(), T::zero(), T::zero())
     }
 
-    /// Returns the unit Y coordinate
-    ///
     /// # Examples
     ///
     /// ```
@@ -172,8 +168,6 @@ where
         Self::new(T::zero(), T::one(), T::zero())
     }
 
-    /// Returns the unit Z coordinate
-    ///
     /// # Examples
     ///
     /// ```
