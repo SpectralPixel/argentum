@@ -24,6 +24,11 @@ impl Into<Ix3> for GridCoordConverter {
     }
 }
 
+fn convert(coord: &GridCoord) -> Ix3 {
+    let intermediary_step: GridCoordConverter = coord.into();
+    intermediary_step.into()
+}
+
 pub struct VoxelGrid {
     size: RegionSizeType,
     data: Array3<Voxel>,
