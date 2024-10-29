@@ -32,10 +32,11 @@ pub struct VoxelGrid {
 impl VoxelGrid {
     pub fn new(size: NonZero<RegionSizeType>) -> Self {
         let size = size.get();
-        let s = usize::from(size);
+        let dims = GridCoord::splat(size);
+        let dims: Ix3 = Into::<GridCoordConverter>::into(&dims).into();
         Self {
             size,
-            data: Array3::from_elem(Ix3(s, s, s), Voxel::default()),
+            data: Array3::from_elem(dims, Voxel::default()),
         }
     }
 
