@@ -16,6 +16,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+
+    - name: Install 
+      run: sudo apt install mold clang
     - name: Format code
       run: cargo fmt
     - name: Build
