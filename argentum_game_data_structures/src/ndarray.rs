@@ -4,18 +4,14 @@ use argentum_game_coordinate_system::prelude::{Coord, RegionSizeType};
 use argentum_game_voxel::Voxel;
 use ndarray::{Array3, Ix3};
 
-#[derive(Debug)]
-pub struct GridCoordConverter(Coord<RegionSizeType>);
+pub type GridCoord = Coord<RegionSizeType>;
 
-impl Into<GridCoordConverter> for Coord<RegionSizeType> {
+#[derive(Debug)]
+pub struct GridCoordConverter(GridCoord);
+
+impl Into<GridCoordConverter> for GridCoord {
     fn into(self) -> GridCoordConverter {
-        GridCoordConverter(
-            Coord::new(
-                self.x,
-                self.y,
-                self.z,
-            )
-        )
+        GridCoordConverter(Coord::new(self.x, self.y, self.z))
     }
 }
 
@@ -45,7 +41,12 @@ impl VoxelGrid {
     }
 
     pub fn get(&self, pos: &GridCoordConverter) -> &Voxel {
-        self.get_checked(&pos).unwrap_or_else(|| panic!("The coordinate {:?} is out of bounds! The maximum size for voxel grids is {}.", pos, self.size))
+        self.get_checked(&pos).unwrap_or_else(|| {
+            panic!(
+                "The coordinate {:?} is out of bounds! The maximum size for voxel grids is {}.",
+                pos, self.size
+            )
+        })
     }
 
     pub fn get_checked(&self, pos: &GridCoordConverter) -> Option<&Voxel> {
