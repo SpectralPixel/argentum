@@ -12,11 +12,11 @@ quickcheck = "1.0.3"
 [workspace]
 resolver = "2"
 members = [
-  "argentum_game_voxel",
-  "argentum_game_coordinate_system",
-  "argentum_game_world_generator",
-  "argentum_game_world_data",
-  "argentum_game_data_structures",
+  "crates/argentum_game_voxel",
+  "crates/argentum_game_coordinate_system",
+  "crates/argentum_game_world_generator",
+  "crates/argentum_game_world_data",
+  "crates/argentum_game_data_structures",
 ]
 
 [profile.dev]
