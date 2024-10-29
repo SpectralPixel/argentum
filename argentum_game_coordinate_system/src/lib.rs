@@ -12,10 +12,10 @@
 //!
 //! For more information about Argentum, see the `argentum_game` crate.
 
-/// Contains `Coordinate` and similar structs.
+/// Contains `Coordinate` and related structs.
 pub mod coordinate;
 
-/// Contains `Region` and similar structs.
+/// Contains `Region` and related structs.
 pub mod region;
 
 /// Contains the `CoordinateOutOfBoundsError`.
