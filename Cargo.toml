@@ -1,13 +1,17 @@
 [package]
 name = "argentum_game"
 version = "0.1.0"
-edition = "2021"
-license = "AGPL-3.0-or-later"
+edition.workspace = true
+license.workspace = true
 
 [dependencies]
 bevy = "0.14.1"
 ndarray = "0.16.0"
 quickcheck = "1.0.3"
+
+[workspace.package]
+license = "AGPL-3.0-or-later"
+edition = "2021"
 
 [workspace]
 resolver = "2"

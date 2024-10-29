@@ -1,9 +1,9 @@
 [package]
 name = "argentum_game_coordinate_system"
-version = "0.8.2"
-edition = "2021"
 description = "Argentum: Coordinate System"
-license = "AGPL-3.0-or-later"
+version = "0.8.2"
+edition.workspace = true
+license.workspace = true
 
 [dependencies]
 argentum_game_coordinate_system_macros = "0.1.0"
