@@ -3,7 +3,7 @@ use thiserror::Error;
 use crate::prelude::Coord;
 
 /// Useful return type to use when working with regions `Region`s
-/// 
+///
 /// Field 0: The coordinate that is supposed to be out of bounds
 /// Field 1: The maximum range. As regions are meant to be cubed, only an integer has to be provided for this.
 #[derive(Error, Debug)]
