@@ -8,3 +8,19 @@ license = "AGPL-3.0-or-later"
 bevy = "0.14.1"
 ndarray = "0.16.0"
 quickcheck = "1.0.3"
+
+[workspace]
+resolver = "2"
+members = [
+  "argentum_game_voxel",
+  "argentum_game_coordinate_system",
+  "argentum_game_world_generator",
+  "argentum_game_world_data",
+  "argentum_game_data_structures",
+]
+
+[profile.dev]
+opt-level = 1
+
+[profile.dev.package."*"]
+opt-level = 3
