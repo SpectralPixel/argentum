@@ -18,5 +18,8 @@ pub mod coordinate;
 /// Contains `Region` and similar structs.
 pub mod region;
 
+/// Contains the `CoordinateOutOfBoundsError`.
+pub mod errors;
+
 /// Import me!
 pub mod prelude;
