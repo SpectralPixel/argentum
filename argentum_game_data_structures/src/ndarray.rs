@@ -40,7 +40,7 @@ impl VoxelGrid {
         }
     }
 
-    pub fn get(&self, pos: &GridCoordConverter) -> &Voxel {
+    pub fn get(&self, pos: &GridCoord) -> &Voxel {
         self.get_checked(&pos).unwrap_or_else(|| {
             panic!(
                 "The coordinate {:?} is out of bounds! The maximum size for voxel grids is {}.",
@@ -49,8 +49,10 @@ impl VoxelGrid {
         })
     }
 
-    pub fn get_checked(&self, pos: &GridCoordConverter) -> Option<&Voxel> {
-        self.data.get::<Ix3>(pos.into())
+    pub fn get_checked(&self, pos: &GridCoord) -> Option<&Voxel> {
+        // this `into` ugly workaround can be improved when type_ascription is stabilized from nightly
+        let pos: Ix3 = Into::<GridCoordConverter>::into(pos).into();
+        self.data.get(pos)
     }
 }
 
@@ -70,20 +72,20 @@ mod tests {
     #[test]
     fn get() {
         let grid = VoxelGrid::new(NonZero::<u8>::new(1).unwrap());
-        let _ = grid.get(&GridCoordConverter(Coord::zero()));
+        let _ = grid.get(&GridCoord::zero());
     }
 
     #[test]
     #[should_panic]
     fn get_out_of_bounds() {
         let grid = VoxelGrid::new(NonZero::<u8>::new(1).unwrap());
-        let _ = grid.get(&GridCoordConverter(Coord::new(2, 0, 0)));
+        let _ = grid.get(&GridCoord::new(2, 0, 0));
     }
 
     #[test]
     #[should_panic]
     fn get_out_of_bounds_2() {
         let grid = VoxelGrid::new(NonZero::<u8>::new(1).unwrap());
-        let _ = grid.get(&GridCoordConverter(Coord::one()));
+        let _ = grid.get(&GridCoord::one());
     }
 }
