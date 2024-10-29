@@ -15,7 +15,7 @@ impl Into<GridCoordConverter> for GridCoord {
     }
 }
 
-impl Into<Ix3> for &GridCoordConverter {
+impl Into<Ix3> for GridCoordConverter {
     fn into(self) -> Ix3 {
         Ix3(
             usize::from(self.0.x),
