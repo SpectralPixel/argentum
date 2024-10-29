@@ -9,7 +9,7 @@ pub type GridCoord = Coord<RegionSizeType>;
 #[derive(Debug)]
 pub struct GridCoordConverter(GridCoord);
 
-impl Into<GridCoordConverter> for GridCoord {
+impl Into<GridCoordConverter> for &GridCoord {
     fn into(self) -> GridCoordConverter {
         GridCoordConverter(Coord::new(self.x, self.y, self.z))
     }
