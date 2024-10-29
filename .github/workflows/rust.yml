@@ -17,8 +17,8 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    - name: Install 
-      run: sudo apt install mold clang
+    - name: Install dependencies
+      run: sudo apt install mold clang alsa
     - name: Format code
       run: cargo fmt
     - name: Build
