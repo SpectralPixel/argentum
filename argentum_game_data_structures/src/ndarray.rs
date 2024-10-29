@@ -38,7 +38,7 @@ impl VoxelGrid {
     pub fn new(size: NonZero<RegionSizeType>) -> Self {
         let size = size.get();
         let dims = GridCoord::splat(size);
-        let dims: Ix3 = Into::<GridCoordConverter>::into(&dims).into();
+        let dims = convert(&dims);
         Self {
             size,
             data: Array3::from_elem(dims, Voxel::default()),
@@ -55,9 +55,7 @@ impl VoxelGrid {
     }
 
     pub fn get_checked(&self, pos: &GridCoord) -> Option<&Voxel> {
-        // this `into` ugly workaround can be improved when type_ascription is stabilized from nightly
-        let pos: Ix3 = Into::<GridCoordConverter>::into(pos).into();
-        self.data.get(pos)
+        self.data.get(convert(&pos))
     }
 }
 
