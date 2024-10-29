@@ -9,7 +9,7 @@ use crate::prelude::Coord;
 /// Field 1: The maximum range. As regions are meant to be cubed, only an integer has to be provided for this.
 #[derive(Error, Debug)]
 #[error("The coordinate at {0} is out of bounds! The maximum range was {1}.")]
-pub struct CoordinateOutOfBoundsError<T, U>(Coord<T>, U)
+pub struct CoordinateOutOfBoundsError<T, U>(pub Coord<T>, pub U)
 where
     T: num::Integer
         + Copy
