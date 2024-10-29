@@ -7,9 +7,9 @@ use ndarray::{Array3, Ix3};
 #[derive(Debug)]
 pub struct GridCoordConverter(Coord<RegionSizeType>);
 
-impl Into<GridCoord> for Coord<RegionSizeType> {
-    fn into(self) -> GridCoord {
-        GridCoord(
+impl Into<GridCoordConverter> for Coord<RegionSizeType> {
+    fn into(self) -> GridCoordConverter {
+        GridCoordConverter(
             Coord::new(
                 self.x,
                 self.y,
@@ -19,7 +19,7 @@ impl Into<GridCoord> for Coord<RegionSizeType> {
     }
 }
 
-impl Into<Ix3> for &GridCoord {
+impl Into<Ix3> for &GridCoordConverter {
     fn into(self) -> Ix3 {
         Ix3(
             usize::from(self.0.x),
@@ -44,11 +44,11 @@ impl VoxelGrid {
         }
     }
 
-    pub fn get(&self, pos: &GridCoord) -> &Voxel {
+    pub fn get(&self, pos: &GridCoordConverter) -> &Voxel {
         self.get_checked(&pos).unwrap_or_else(|| panic!("The coordinate {:?} is out of bounds! The maximum size for voxel grids is {}.", pos, self.size))
     }
 
-    pub fn get_checked(&self, pos: &GridCoord) -> Option<&Voxel> {
+    pub fn get_checked(&self, pos: &GridCoordConverter) -> Option<&Voxel> {
         self.data.get::<Ix3>(pos.into())
     }
 }
@@ -69,20 +69,20 @@ mod tests {
     #[test]
     fn get() {
         let grid = VoxelGrid::new(NonZero::<u8>::new(1).unwrap());
-        let _ = grid.get(&GridCoord(Coord::zero()));
+        let _ = grid.get(&GridCoordConverter(Coord::zero()));
     }
 
     #[test]
     #[should_panic]
     fn get_out_of_bounds() {
         let grid = VoxelGrid::new(NonZero::<u8>::new(1).unwrap());
-        let _ = grid.get(&GridCoord(Coord::new(2, 0, 0)));
+        let _ = grid.get(&GridCoordConverter(Coord::new(2, 0, 0)));
     }
 
     #[test]
     #[should_panic]
     fn get_out_of_bounds_2() {
         let grid = VoxelGrid::new(NonZero::<u8>::new(1).unwrap());
-        let _ = grid.get(&GridCoord(Coord::one()));
+        let _ = grid.get(&GridCoordConverter(Coord::one()));
     }
 }
