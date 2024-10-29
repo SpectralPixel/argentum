@@ -6,7 +6,6 @@ use ndarray::{Array3, Ix3};
 
 pub type GridCoord = Coord<RegionSizeType>;
 
-#[derive(Debug)]
 pub struct GridCoordConverter(GridCoord);
 
 impl Into<GridCoordConverter> for &GridCoord {
