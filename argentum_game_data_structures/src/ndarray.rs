@@ -5,7 +5,7 @@ use argentum_game_voxel::Voxel;
 use ndarray::{Array3, Ix3};
 
 #[derive(Debug)]
-pub struct GridCoord(pub Coord<RegionSizeType>);
+pub struct GridCoordConverter(Coord<RegionSizeType>);
 
 impl Into<GridCoord> for Coord<RegionSizeType> {
     fn into(self) -> GridCoord {
