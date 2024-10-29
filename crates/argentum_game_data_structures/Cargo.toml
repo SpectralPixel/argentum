@@ -1,9 +1,9 @@
 [package]
 name = "argentum_game_data_structures"
-version = "0.1.0"
-edition = "2021"
 description = "Argentum: Data Structures"
-license = "AGPL-3.0-or-later"
+version = "0.1.0"
+edition.workspace = true
+license.workspace = true
 
 [dependencies]
 argentum_game_voxel = "0.1.0"
