@@ -1,4 +1,4 @@
-name: Rust
+name: Code Quality Checks
 
 on:
   push:
@@ -10,7 +10,7 @@ env:
   CARGO_TERM_COLOR: always
 
 jobs:
-  build:
+  Enforce_Code_Quality:
 
     runs-on: ubuntu-latest
 
@@ -37,13 +37,11 @@ jobs:
           fetch-depth: 0
           ref: ${{ github.event.pull_request.head.ref }}
 
-      - name: Install Rust toolchain
-        uses: dtolnay/rust-toolchain@stable
       - name: Install dependencies
         run: sudo apt install mold clang pkg-config libx11-dev libasound2-dev libudev-dev libxkbcommon-x11-0
 
-      - name: Build code & run tests 
-        run: cargo test --verbose
+      - name: Build code & run tests
+        run: cargo test --verbose --workspace --exclude argentum_game
       - name: Run Cargo Assist
         uses: MarcoIeni/cargo-assist@v0.1
         with:
