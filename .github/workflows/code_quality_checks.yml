@@ -17,7 +17,7 @@ jobs:
     steps:
 
       # if it's a regular push
-      - name: Checkout repository
+      - name: Checkout repository (main branch)
         uses: actions/checkout@v4
         if: github.event_name == 'push'
         with:
@@ -27,7 +27,7 @@ jobs:
           fetch-depth: 0
 
       # if it's a PR
-      - name: Checkout repository
+      - name: Checkout repository (pull requests)
         uses: actions/checkout@v4
         if: github.event_name == 'pull_request'
         with:
