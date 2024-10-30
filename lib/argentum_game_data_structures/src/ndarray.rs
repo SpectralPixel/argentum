@@ -8,18 +8,18 @@ pub type GridCoord = Coord<RegionSizeType>;
 
 pub struct GridCoordConverter(GridCoord);
 
-impl Into<GridCoordConverter> for &GridCoord {
-    fn into(self) -> GridCoordConverter {
-        GridCoordConverter(Coord::new(self.x, self.y, self.z))
+impl From<&GridCoord> for GridCoordConverter {
+    fn from(val: &GridCoord) -> Self {
+        GridCoordConverter(Coord::new(val.x, val.y, val.z))
     }
 }
 
-impl Into<Ix3> for GridCoordConverter {
-    fn into(self) -> Ix3 {
+impl From<GridCoordConverter> for Ix3 {
+    fn from(val: GridCoordConverter) -> Self {
         Ix3(
-            usize::from(self.0.x),
-            usize::from(self.0.y),
-            usize::from(self.0.z),
+            usize::from(val.0.x),
+            usize::from(val.0.y),
+            usize::from(val.0.z),
         )
     }
 }
@@ -46,7 +46,7 @@ impl VoxelGrid {
     }
 
     pub fn get(&self, pos: &GridCoord) -> &Voxel {
-        self.get_checked(&pos).unwrap_or_else(|| {
+        self.get_checked(pos).unwrap_or_else(|| {
             panic!(
                 "The coordinate {:?} is out of bounds! The maximum size for voxel grids is {}.",
                 pos, self.size
@@ -55,7 +55,7 @@ impl VoxelGrid {
     }
 
     pub fn get_checked(&self, pos: &GridCoord) -> Option<&Voxel> {
-        self.data.get(convert(&pos))
+        self.data.get(convert(pos))
     }
 }
 
