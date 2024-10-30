@@ -25,7 +25,7 @@ impl fmt::Display for LocalCoord {
 impl From<GlobalCoord> for LocalCoord {
     fn from(global_position: GlobalCoord) -> Self {
         fn convert(mut axis_position: GlobalCoordType) -> LocalCoordType {
-            let chunk_size = GlobalCoordType::try_from(World::CHUNK_SIZE).unwrap();
+            let chunk_size = GlobalCoordType::from(World::CHUNK_SIZE);
 
             while axis_position < 0 {
                 axis_position += chunk_size;

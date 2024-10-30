@@ -25,10 +25,8 @@ impl fmt::Display for ChunkCoord {
 impl From<GlobalCoord> for ChunkCoord {
     fn from(global_position: GlobalCoord) -> Self {
         fn convert(axis_position: GlobalCoordType) -> ChunkCoordType {
-            ChunkCoordType::try_from(
-                axis_position / GlobalCoordType::try_from(World::CHUNK_SIZE).unwrap(),
-            )
-            .unwrap()
+            ChunkCoordType::try_from(axis_position / GlobalCoordType::from(World::CHUNK_SIZE))
+                .unwrap()
         }
 
         Self {

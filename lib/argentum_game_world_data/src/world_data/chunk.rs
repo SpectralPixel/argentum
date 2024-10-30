@@ -24,9 +24,9 @@ impl Chunk {
 
     pub fn get_voxel(&self, local_position: &LocalCoord) -> Result<Voxel, Box<dyn Error>> {
         let LocalCoord { x, y, z } = *local_position;
-        let x = usize::try_from(x).unwrap();
-        let y = usize::try_from(y).unwrap();
-        let z = usize::try_from(z).unwrap();
+        let x = usize::from(x);
+        let y = usize::from(y);
+        let z = usize::from(z);
         match self.data.get(Ix3(x, y, z)) {
             Some(voxel_reference) => Ok(voxel_reference.to_owned()),
             None => Err(Box::new(VoxelNotFoundError(local_position.to_owned()))),

@@ -15,13 +15,37 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
 
-    - name: Install 
-      run: sudo apt install mold clang
-    - name: Format code
-      run: cargo fmt
-    - name: Build
-      run: cargo build --verbose
-    - name: Run tests
-      run: cargo test --verbose
+      # if it's a regular push
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        if: github.event_name == 'push'
+        with:
+          # Use CARGO_ASSIST_TOKEN if available, by specifying the PAT secret name.
+          # In forks it's not available, so use the default GITHUB_TOKEN.
+          token: ${{ secrets.CARGO_ASSIST_TOKEN || secrets.GITHUB_TOKEN}}
+          fetch-depth: 0
+
+      # if it's a PR
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        if: github.event_name == 'pull_request'
+        with:
+          # Use CARGO_ASSIST_TOKEN if available, by specifying the PAT secret name.
+          # In forks it's not available, so use the default GITHUB_TOKEN.
+          token: ${{ secrets.CARGO_ASSIST_TOKEN || secrets.GITHUB_TOKEN}}
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.ref }}
+
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+      - name: Install dependencies
+        run: sudo apt install mold clang pkg-config libx11-dev libasound2-dev libudev-dev libxkbcommon-x11-0
+
+      - name: Build code & run tests 
+        run: cargo test --verbose
+      - name: Run Cargo Assist
+        uses: MarcoIeni/cargo-assist@v0.1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }} # <-- To be the author of the commit,
+                                                    #     set the PAT secret name here, too.
