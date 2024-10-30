@@ -40,10 +40,9 @@ jobs:
       - name: Install dependencies
         run: sudo apt install mold clang pkg-config libx11-dev libasound2-dev libudev-dev libxkbcommon-x11-0
 
-      - name: Build code & run tests
-        run: cargo test --verbose --workspace --exclude argentum_game
       - name: Run Cargo Assist
         uses: MarcoIeni/cargo-assist@v0.1
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }} # <-- To be the author of the commit,
-                                                    #     set the PAT secret name here, too.
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build code & run tests
+        run: cargo test --verbose --workspace --exclude argentum_game
