@@ -17,7 +17,7 @@ jobs:
     steps:
 
       # if it's a regular push
-      - name: Checkout repository
+      - name: Checkout repository (main branch)
         uses: actions/checkout@v4
         if: github.event_name == 'push'
         with:
@@ -27,7 +27,7 @@ jobs:
           fetch-depth: 0
 
       # if it's a PR
-      - name: Checkout repository
+      - name: Checkout repository (pull requests)
         uses: actions/checkout@v4
         if: github.event_name == 'pull_request'
         with:
@@ -40,10 +40,11 @@ jobs:
       - name: Install dependencies
         run: sudo apt install mold clang pkg-config libx11-dev libasound2-dev libudev-dev libxkbcommon-x11-0
 
-      - name: Build code & run tests
-        run: cargo test --verbose --workspace --exclude argentum_game
+      - name: Enable risky lints
+        run: echo "__CARGO_FIX_YOLO=1" >> $GITHUB_ENV
       - name: Run Cargo Assist
         uses: MarcoIeni/cargo-assist@v0.1
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }} # <-- To be the author of the commit,
-                                                    #     set the PAT secret name here, too.
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build code & run tests
+        run: cargo test --verbose --workspace --exclude argentum_game
