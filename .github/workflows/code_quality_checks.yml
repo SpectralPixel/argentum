@@ -40,6 +40,8 @@ jobs:
       - name: Install dependencies
         run: sudo apt install mold clang pkg-config libx11-dev libasound2-dev libudev-dev libxkbcommon-x11-0
 
+      - name: Enable risky lints
+        run: echo "__CARGO_FIX_YOLO=1" >> $GITHUB_ENV
       - name: Run Cargo Assist
         uses: MarcoIeni/cargo-assist@v0.1
         with:
