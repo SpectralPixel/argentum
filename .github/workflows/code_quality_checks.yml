@@ -47,6 +47,5 @@ jobs:
       - name: Run Cargo Assist
         uses: MarcoIeni/cargo-assist@v0.1
         with:
-          clippy_flags: "--all-targets --all-features --workspace --no-deps"
           github_token: ${{ secrets.GITHUB_TOKEN }} # <-- To be the author of the commit,
                                                     #     set the PAT secret name here, too.
